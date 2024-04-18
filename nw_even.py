@@ -7,6 +7,7 @@ class Packet:
         self.dst = dst
 
 def switch(env,es,speed):
+    
     while True:
         packet = yield es.get()
         packet_size = 1000
@@ -48,7 +49,7 @@ sw1 = simpy.Store(env,capacity=10)
 sw2 = simpy.Store(env,capacity=10)
 
 '''
-Calling packet Generator to fill es1 with packets
+Generates packets with increasing IDs at a specified interval/
 '''
 host_process1 = env.process(packet_generator(env,"es1","switch1", es1))
 host_process2 = env.process(packet_generator(env,"es2","switch2",es2))
@@ -65,6 +66,5 @@ switch_process2 = env.process(switch(env, es2, link_speed3))
 env.process(send_packet_to_es3(env,es3,sw2,link_speed5))
 
 env.run(until=100) 
-
 
 
