@@ -6,18 +6,27 @@ class Packet:
         self.src = src
         self.dst = dst
 
-def switch(env,es,port2,speed):
+def switch(env,es,speed):
     while True:
         packet = yield es.get()
-        packet_size = 700
+        packet_size = 1000
         transmission_delay = packet_size / speed
-        print(f"Transmitting packet{packet.id} from {packet.src} to {packet.dst} - Delay: {transmission_delay:.4f} seconds")
+        print(f"Transmitting packet{packet.id} from {packet.src} to {packet.dst} - Delay: {transmission_delay:.4f} seconds  - Current time:{env.now} seconds")
+        packet.src = packet.dst
         yield env.timeout(transmission_delay)
         if packet.dst == "switch1":
             yield sw1.put(packet)
         else:
             yield sw2.put(packet)
-def send_packet_dst(env,sw1,sw2,speed):
+
+def send_packet_dst(env,sw,speed):
+    while True:
+        packet = yield sw.get()
+        packet_size = 1000
+        transmission_delay = packet_size/speed
+        print(f"Transmitting packet{packet.id} from {packet.src} to es3 - Delay: {transmission_delay:.4f} seconds - Current time:{env.now} seconds")
+        yield env.timeout(transmission_delay)
+        sw.get()
 
 def packet_generator(env,src,dst,host):
     packet_id = 1
@@ -39,14 +48,15 @@ host_process2 = env.process(packet_generator(env,"es2","switch2",es2))
 
 
 link_speed1 = 100  # 100 Mbps
-link_speed2 = 500  # 500 Mbps
-link_speed3 = 600  # 600 Mbps
-link_speed4 = 1500  # 1.5 Gbps
-link_speed5 = 1000
+link_speed2 = 200  # 500 Mbps
+link_speed3 = 400  # 600 Mbps
+link_speed4 = 200  # 1.5 Gbps
+link_speed5 = 500
 
-switch_process1 = env.process(switch(env, es1, sw1, link_speed1))
-env.process()
-switch_process2 = env.process(switch(env, es2, sw2, link_speed3))
+switch_process1 = env.process(switch(env, es1, link_speed1))
+env.process(send_packet_dst(env,sw1,link_speed2))
+switch_process2 = env.process(switch(env, es2, link_speed3))
+env.process(send_packet_dst(env,sw2,link_speed5))
 
 env.run(until=20) 
 
