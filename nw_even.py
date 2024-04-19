@@ -11,14 +11,7 @@ class Packet:
         self.dst = dst
 
 
-
-
-
 class NetworkEnvironment:
-    """
-    Represents the network environment for reinforcement learning.
-    """
-
     def __init__(self, time,capacity=10, link_speeds=[1000, 300, 400, 800, 200]):
         self.env = simpy.Environment()
         self.es1 = simpy.Store(self.env, capacity=capacity)
