@@ -1,5 +1,8 @@
 import simpy
 
+
+packet_size = 1000
+
 class Packet:
     def __init__(self,id,src,dst):
         self.id = id
@@ -10,9 +13,8 @@ def switch(env,es,speed):
     
     while True:
         packet = yield es.get()
-        packet_size = 1000
         transmission_delay = packet_size / speed
-        print(f"Transmitting packet{packet.id} from {packet.src} to {packet.dst} - Delay: {transmission_delay:.4f} seconds  - Current time:{env.now} seconds")
+        print(f"Transmitting packet{packet.id} from {packet.src} to {packet.dst} - Delay: {transmission_delay:.4f} seconds  - Current time:{env.now} seconds - Current Switch 1 Queue Length: {len(sw1.items)}') - Current Switch 2 Queue Length: {len(sw2.items)} ")
         packet.src = packet.dst
         yield env.timeout(transmission_delay)
         if packet.dst == "switch1":
@@ -26,7 +28,6 @@ def send_packet_to_es3(env,es,sw,speed):
     '''
     while True:
         packet = yield sw.get()
-        packet_size = 1000
         transmission_delay = packet_size/speed
         print(f"Transmitting packet{packet.id} from {packet.src} to es3 - Delay: {transmission_delay:.4f} seconds - Current time:{env.now} seconds")
         yield env.timeout(transmission_delay)
