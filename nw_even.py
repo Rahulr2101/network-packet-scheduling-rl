@@ -35,7 +35,7 @@ def send_packet_to_es3(env,es,sw,speed):
 def packet_generator(env,src,dst,host):
     packet_id = 1
     while True:
-        yield env.timeout(5)
+        
         packet = Packet(packet_id,src,dst)
         yield host.put(packet)
         packet_id += 1
@@ -49,22 +49,21 @@ sw1 = simpy.Store(env,capacity=10)
 sw2 = simpy.Store(env,capacity=10)
 
 '''
-Generates packets with increasing IDs at a specified interval/
+Generates packets with increasing IDs at a specified interval
 '''
 host_process1 = env.process(packet_generator(env,"es1","switch1", es1))
 host_process2 = env.process(packet_generator(env,"es2","switch2",es2))
 
-link_speed1 = 100  
-link_speed2 = 200 
+link_speed1 = 1000  
+link_speed2 = 300 
 link_speed3 = 400  
-link_speed4 = 200  
-link_speed5 = 500
+link_speed4 = 800 
+link_speed5 = 200
 
 switch_process1 = env.process(switch(env, es1, link_speed1))
 env.process(send_packet_to_es3(env,es3,sw1,link_speed2))
 switch_process2 = env.process(switch(env, es2, link_speed3))
 env.process(send_packet_to_es3(env,es3,sw2,link_speed5))
-
 env.run(until=100) 
 
 
