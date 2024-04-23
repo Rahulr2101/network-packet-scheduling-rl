@@ -6,4 +6,4 @@ from nw_even import NetworkEnvironment
 
 
 
-env = NetworkEnvironment(1)
+env = NetworkEnvironment(100)
