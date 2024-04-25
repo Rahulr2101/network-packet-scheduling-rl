@@ -2,6 +2,7 @@
 
 ## Network Simulator
 
+
 This Python script simulates a simple network environment with packet switching. It utilizes the `simpy` library for process-based simulation.
 
 Features:
