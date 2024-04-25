@@ -7,3 +7,5 @@ from nw_even import NetworkEnvironment
 
 
 env = NetworkEnvironment(100)
+
+# env.step(1)
