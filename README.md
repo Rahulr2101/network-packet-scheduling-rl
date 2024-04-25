@@ -21,6 +21,6 @@ Displays simulation logs in a clear table format.
 
 Usage:
 
-Clone or download the repository containing the script (`nw_even.py`).
+Clone or download the repository containing the script (`nw_environment.py`).
 Install required libraries (pip install simpy and optionally `pip install tabulate`).
-Run the script from the command line: `python nw_even.py`
+Run the script from the command line: `python nw_environment.py`
