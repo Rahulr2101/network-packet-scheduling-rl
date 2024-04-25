@@ -7,10 +7,11 @@ This Python script simulates a simple network environment with packet switching.
 
 Features:
 
-Models network elements like hosts, switches, and links.
-Simulates packet transmission with delays based on link speeds.
-Tracks and logs packet activity, including ID, source, destination, delay, and switch queue lengths.
-Displays simulation logs in a clear table format.
+ - Models network elements like hosts, switches, and links.
+ - Simulates packet transmission with delays based on link speeds.
+ - Tracks and logs packet activity, including ID, source, destination,
+   delay, and switch queue lengths.
+ - Displays simulation logs in a clear table format.
 
 **Requirements:**
 
