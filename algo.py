@@ -1,10 +1,13 @@
 import numpy as np
-import matplotlib.pyplot as plt
+
 
 from nw_environment import NetworkEnvironment
 
 
+env = NetworkEnvironment(100)  
 
 
-env = NetworkEnvironment(100)
+action = env.step(0)
+print(action)
+
 
