@@ -29,8 +29,6 @@ class NetworkEnvironment:
         self.actions_step ={0:"sw1_to_sw2",1:"sw2_to_sw1",2:"sw1_to_dest",3:"sw2_to_dest"}
         self.link_speeds = link_speeds  
         
-        # self.create_environment(time)
-
 
     def switch(self,es,sw,speed):
         """
@@ -39,24 +37,10 @@ class NetworkEnvironment:
         while True:
             packet = yield es.get()
             transmission_delay = packet_size / speed
-            
-            logs_list.append([packet.id,packet.src +" to " + packet.dst,transmission_delay,self.env.now,len(self.sw1.items),len(self.sw2.items) ])
+            logs_list.append([packet.id,packet.src +" to " + packet.dst,transmission_delay,packet.timestamp,env.now,len(self.sw1.items),len(self.sw2.items) ])
             packet.src = packet.dst
-            yield self.env.timeout(transmission_delay)
+            yield env.timeout(transmission_delay)
             yield sw.put(packet)
-
-    # def step(self,action):
-    #     if self.actions_step[action] == self.actions_step[0]:
-    #         packet = yield self.sw1.get()
-    #         print(self.env.now)
-    #         yield self.env.timeout(self.CalculateTransmissionDelay(self.link_speeds["sw1"]["sw2"]))
-    #         yield self.sw2.put(packet)
-
-    #     self.env.run()
-    #     return [len(self.sw1.items),len(self.sw2.items),self.reward(packet)]
-    #     # if action_step == "sw1":
-
-        
 
     # def send_packet_to_es3(self, env, es, sw, speed):
     #     """
@@ -70,8 +54,8 @@ class NetworkEnvironment:
     #         yield env.timeout(transmission_delay)
     #         yield es.put(packet)
 
-    def packet_generator(self, src, dst, host, packet_number=5):
-        while True:
+    def packet_generator(self, src, dst, host, packet_number=10):
+        while packet_number >0:
             packet = Packet(uuid.uuid4(),src, dst,timestamp= self.env.now)
             yield host.put(packet)
             # packet_number -= 1
@@ -105,6 +89,7 @@ def model(env):
             
             # Starting network switches and packet generator
             logs_list.append([f"episode = {i} ","","","","","",""])  
+           
             nw = NetworkEnvironment(env)
             host_process1 = env.process(nw.packet_generator( "es1", "switch1", nw.es1))
             host_process2 = env.process(nw.packet_generator("es2","switch2",nw.es2))
@@ -113,7 +98,7 @@ def model(env):
             
             
             
-            yield env.timeout(1)       
+            yield env.timeout(6)      
             state = [len(nw.sw1.items),len(nw.sw2.items)]
             while len(nw.sw1.items) > 0  or len(nw.sw2.items) > 0 :
                 if rng.random()< epsilon:
@@ -123,7 +108,6 @@ def model(env):
                 if nw.actions_step[action] == "sw1_to_sw2":
                     packet =  yield nw.sw1.get()
                     yield nw.sw2.put(packet)
-                    
                     logs_list.append([packet.id,"sw1" +" to " + "sw2",f"{CalculateTransmissionDelay(nw.link_speeds["sw1"]["sw2"])} (Agent)",packet.timestamp,env.now,len(nw.sw1.items),len(nw.sw2.items) ])
 
                     
