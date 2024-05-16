@@ -34,7 +34,8 @@ class NetworkEnvironment:
         """
         Simulates packet switching behavior.
         """
-        while True:
+        self.flag = True
+        while self.flag:
             packet = yield es.get()
             transmission_delay = packet_size / speed
             logs_list.append([packet.id,packet.src +" to " + packet.dst,transmission_delay,packet.timestamp,env.now,len(self.sw1.items),len(self.sw2.items) ])
@@ -100,7 +101,7 @@ def model(env):
             
             yield env.timeout(6)      
             state = [len(nw.sw1.items),len(nw.sw2.items)]
-            while len(nw.sw1.items) > 0  or len(nw.sw2.items) > 0 :
+            while (len(nw.sw1.items) > 0  or len(nw.sw2.items) > 0 ) and  (len(nw.sw1.items) != 30  or len(nw.sw2.items) != 30 ) :
                 if rng.random()< epsilon:
                     action = random.choice(list(nw.actions_step.keys()))
                 else:
@@ -122,13 +123,13 @@ def model(env):
                     packet = yield nw.sw1.get()
                     yield nw.es3.put(packet)
                     
-                    logs_list.append([packet.id,"sw1" +" to " + "es3",f"{CalculateTransmissionDelay(nw.link_speeds["sw1"]["es3"])} (Agent)",env.now,packet.timestamp,len(nw.sw1.items),len(nw.sw2.items) ])
+                    logs_list.append([packet.id,"sw1" +" to " + "es3",f"{CalculateTransmissionDelay(nw.link_speeds["sw1"]["es3"])} (Agent)",env.now-packet.timestamp,env.now,len(nw.sw1.items),len(nw.sw2.items) ])
 
                     
                 elif nw.actions_step[action] == "sw2_to_dest":
                     packet = yield nw.sw2.get()
                     yield nw.es3.put(packet)
-                    logs_list.append([packet.id,"sw2" +" to " + "es3",f"{CalculateTransmissionDelay(nw.link_speeds["sw2"]["es3"])} (Agent)",env.now,packet.timestamp,len(nw.sw1.items),len(nw.sw2.items) ])
+                    logs_list.append([packet.id,"sw2" +" to " + "es3",f"{CalculateTransmissionDelay(nw.link_speeds["sw2"]["es3"])} (Agent)",env.now-packet.timestamp,env.now,len(nw.sw1.items),len(nw.sw2.items) ])
                     
                 new_state = [len(nw.sw1.items),len(nw.sw2.items)]
                 reward = rewardCal(env.now,packet.timestamp)
@@ -138,6 +139,10 @@ def model(env):
                 
                 state = new_state
             epsilon = max(epsilon - epsilon_decay_rate, 0)
+            nw.flag = False
+            print("sss")
+            print(env.now)
+            break
             
             if(epsilon==0):
                 learning_rate_a = 0.0001    

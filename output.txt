@@ -1,219 +1,163 @@
-Packet ID                             Action          Delay(in Sec)       Starting Time       Current_time(in Sec)    Switch 1 Queue Length    Switch 2 Queue Length
-------------------------------------  --------------  ------------------  ------------------  ----------------------  -----------------------  -----------------------
+Packet ID                             Action          Delay(in Sec)       Starting Time    Current_time(in Sec)    Switch 1 Queue Length    Switch 2 Queue Length
+------------------------------------  --------------  ------------------  ---------------  ----------------------  -----------------------  -----------------------
 episode = 0
-72a7f28d-1386-48c2-8bbb-e7b810d5ab69  es1 to switch1  1.1111111111111112  0                   0                       0                        0
-b866b342-fc8a-41f4-80cb-1c7f2f257b8d  es2 to switch2  2.5                 0                   0                       0                        0
-14cf578c-2957-42bb-9e69-1f26af99597a  es1 to switch1  1.1111111111111112  1                   1.1111111111111112      1                        0
-7c95c4e5-c1dd-4410-928a-a15034f0e028  es1 to switch1  1.1111111111111112  2                   2.2222222222222223      2                        0
-8c6073b7-f789-44d4-9de4-721fb6a4db9d  es2 to switch2  2.5                 1                   2.5                     2                        1
-6b666410-2efb-4dfb-b355-c9183172e424  es1 to switch1  1.1111111111111112  3                   3.3333333333333335      3                        1
-4b1ddcda-952a-44d9-927a-0676fbcb2819  es1 to switch1  1.1111111111111112  4                   4.444444444444445       4                        1
-be1bf753-6f60-41ba-9d55-596e28156735  es2 to switch2  2.5                 2                   5.0                     4                        2
-73236a2c-42be-4dc7-a0e6-581793c2023f  es1 to switch1  1.1111111111111112  5                   5.555555555555555       5                        2
-72a7f28d-1386-48c2-8bbb-e7b810d5ab69  sw1 to sw2      1.25 (Agent)        0                   6                       4                        3
-14cf578c-2957-42bb-9e69-1f26af99597a  sw1 to sw2      1.25 (Agent)        1                   6                       3                        4
-7c95c4e5-c1dd-4410-928a-a15034f0e028  sw1 to es3      10.0 (Agent)        6                   2                       2                        4
-6b666410-2efb-4dfb-b355-c9183172e424  sw1 to sw2      1.25 (Agent)        3                   6                       1                        5
-4b1ddcda-952a-44d9-927a-0676fbcb2819  sw1 to es3      10.0 (Agent)        6                   4                       0                        5
-bf9d2484-b618-4eb4-b8fe-c80509e09e77  es1 to switch1  1.1111111111111112  6                   6.666666666666666       0                        5
-73236a2c-42be-4dc7-a0e6-581793c2023f  sw1 to es3      10.0 (Agent)        6.666666666666666   5                       0                        5
-1e11f2e3-85f4-4b1f-bf74-a66674b80679  es2 to switch2  2.5                 3                   7.5                     0                        6
-8cd1d4c7-3d35-4ffb-a085-dd4969c02bcf  es1 to switch1  1.1111111111111112  7                   7.777777777777777       0                        6
-bf9d2484-b618-4eb4-b8fe-c80509e09e77  sw1 to es3      10.0 (Agent)        7.777777777777777   6                       0                        6
-b7ab3d5f-fd09-4278-b352-653258418371  es1 to switch1  1.1111111111111112  8                   8.888888888888888       0                        6
-8cd1d4c7-3d35-4ffb-a085-dd4969c02bcf  sw1 to es3      10.0 (Agent)        8.888888888888888   7                       0                        6
-b866b342-fc8a-41f4-80cb-1c7f2f257b8d  sw2 to es3      10.0 (Agent)        8.888888888888888   0                       0                        5
-8c6073b7-f789-44d4-9de4-721fb6a4db9d  sw2 to es3      10.0 (Agent)        8.888888888888888   1                       0                        4
-72a7f28d-1386-48c2-8bbb-e7b810d5ab69  sw2 to sw1      1.25 (Agent)        0                   8.888888888888888       1                        3
-14cf578c-2957-42bb-9e69-1f26af99597a  sw2 to sw1      1.25 (Agent)        1                   8.888888888888888       2                        2
-6b666410-2efb-4dfb-b355-c9183172e424  sw2 to sw1      1.25 (Agent)        3                   8.888888888888888       3                        1
-72a7f28d-1386-48c2-8bbb-e7b810d5ab69  sw1 to es3      10.0 (Agent)        8.888888888888888   0                       2                        1
-be1bf753-6f60-41ba-9d55-596e28156735  sw2 to es3      10.0 (Agent)        8.888888888888888   2                       2                        0
-14cf578c-2957-42bb-9e69-1f26af99597a  sw1 to sw2      1.25 (Agent)        1                   8.888888888888888       1                        1
-6b666410-2efb-4dfb-b355-c9183172e424  sw1 to sw2      1.25 (Agent)        3                   8.888888888888888       0                        2
-bd4edc00-db55-4b3d-bbdd-d2706625aba4  es1 to switch1  1.1111111111111112  9                   9.999999999999998       0                        3
-b7ab3d5f-fd09-4278-b352-653258418371  sw1 to sw2      1.25 (Agent)        8                   9.999999999999998       0                        3
-221e8e3a-ae91-49d1-b86a-289aa44aacd7  es2 to switch2  2.5                 4                   10.0                    0                        4
-725e1d1c-cd89-4053-8279-71fe127b2ad4  es1 to switch1  1.1111111111111112  10                  11.111111111111109      0                        5
-bd4edc00-db55-4b3d-bbdd-d2706625aba4  sw1 to sw2      1.25 (Agent)        9                   11.111111111111109      0                        5
-76136576-b51e-40c5-a579-a190d72d5c66  es1 to switch1  1.1111111111111112  11                  12.22222222222222       0                        5
-725e1d1c-cd89-4053-8279-71fe127b2ad4  sw1 to es3      10.0 (Agent)        12.22222222222222   10                      0                        5
-9113711b-5e2c-46d3-8e76-696455277671  es2 to switch2  2.5                 5                   12.5                    0                        6
-8143d193-f701-4402-a2ae-ddc5a6069551  es1 to switch1  1.1111111111111112  12                  13.33333333333333       0                        6
-76136576-b51e-40c5-a579-a190d72d5c66  sw1 to es3      10.0 (Agent)        13.33333333333333   11                      0                        6
-f38843c8-e633-44f4-8114-87a5516832e0  es1 to switch1  1.1111111111111112  13                  14.444444444444441      0                        7
-8143d193-f701-4402-a2ae-ddc5a6069551  sw1 to sw2      1.25 (Agent)        12                  14.444444444444441      0                        7
-789441fc-6289-4984-9363-b5d8fe49f335  es2 to switch2  2.5                 6                   15.0                    0                        8
-786ddb73-be36-4a67-96ed-5de26e5718ca  es1 to switch1  1.1111111111111112  14                  15.555555555555552      0                        9
-f38843c8-e633-44f4-8114-87a5516832e0  sw1 to sw2      1.25 (Agent)        13                  15.555555555555552      0                        9
-260b35cb-f3b5-4702-bbdf-4e75fb6c9f66  es1 to switch1  1.1111111111111112  15                  16.666666666666664      0                        10
-786ddb73-be36-4a67-96ed-5de26e5718ca  sw1 to sw2      1.25 (Agent)        14                  16.666666666666664      0                        10
-14cf578c-2957-42bb-9e69-1f26af99597a  sw2 to es3      10.0 (Agent)        16.666666666666664  1                       0                        9
-6b666410-2efb-4dfb-b355-c9183172e424  sw2 to sw1      1.25 (Agent)        3                   16.666666666666664      1                        8
-6b666410-2efb-4dfb-b355-c9183172e424  sw1 to sw2      1.25 (Agent)        3                   16.666666666666664      0                        9
-4fa2d5f1-0089-4552-8250-8bf66b5ca1cf  es2 to switch2  2.5                 7                   17.5                    0                        10
-2f04e484-2c69-4084-8c2d-83331bc06597  es1 to switch1  1.1111111111111112  16                  17.777777777777775      0                        11
-260b35cb-f3b5-4702-bbdf-4e75fb6c9f66  sw1 to sw2      1.25 (Agent)        15                  17.777777777777775      0                        11
-b7ab3d5f-fd09-4278-b352-653258418371  sw2 to es3      10.0 (Agent)        17.777777777777775  8                       0                        10
-b035feac-f79b-4a9d-a0dc-fb522247af21  es1 to switch1  1.1111111111111112  17                  18.888888888888886      0                        11
-2f04e484-2c69-4084-8c2d-83331bc06597  sw1 to sw2      1.25 (Agent)        16                  18.888888888888886      0                        11
-54e11034-a969-46b5-9914-13812c657fc1  es1 to switch1  1.1111111111111112  18                  19.999999999999996      0                        11
-b035feac-f79b-4a9d-a0dc-fb522247af21  sw1 to es3      10.0 (Agent)        19.999999999999996  17                      0                        11
-f8af2445-c4b5-46db-be34-192271a3cf50  es2 to switch2  2.5                 8                   20.0                    0                        12
-01175826-e67c-4fd9-be03-8e280f3afba8  es1 to switch1  1.1111111111111112  19                  21.111111111111107      0                        12
-54e11034-a969-46b5-9914-13812c657fc1  sw1 to es3      10.0 (Agent)        21.111111111111107  18                      0                        12
-abdd4a39-9d91-4647-b473-a6cb84f8e0ef  es1 to switch1  1.1111111111111112  20                  22.222222222222218      0                        12
-01175826-e67c-4fd9-be03-8e280f3afba8  sw1 to es3      10.0 (Agent)        22.222222222222218  19                      0                        12
-1e11f2e3-85f4-4b1f-bf74-a66674b80679  sw2 to sw1      1.25 (Agent)        3                   22.222222222222218      1                        11
-bd4edc00-db55-4b3d-bbdd-d2706625aba4  sw2 to es3      10.0 (Agent)        22.222222222222218  9                       1                        10
-221e8e3a-ae91-49d1-b86a-289aa44aacd7  sw2 to sw1      1.25 (Agent)        4                   22.222222222222218      2                        9
-1e11f2e3-85f4-4b1f-bf74-a66674b80679  sw1 to sw2      1.25 (Agent)        3                   22.222222222222218      1                        10
-8143d193-f701-4402-a2ae-ddc5a6069551  sw2 to es3      10.0 (Agent)        22.222222222222218  12                      1                        9
-9113711b-5e2c-46d3-8e76-696455277671  sw2 to es3      10.0 (Agent)        22.222222222222218  5                       1                        8
-f38843c8-e633-44f4-8114-87a5516832e0  sw2 to es3      10.0 (Agent)        22.222222222222218  13                      1                        7
-786ddb73-be36-4a67-96ed-5de26e5718ca  sw2 to es3      10.0 (Agent)        22.222222222222218  14                      1                        6
-221e8e3a-ae91-49d1-b86a-289aa44aacd7  sw1 to es3      10.0 (Agent)        22.222222222222218  4                       0                        6
-6b666410-2efb-4dfb-b355-c9183172e424  sw2 to es3      10.0 (Agent)        22.222222222222218  3                       0                        5
-789441fc-6289-4984-9363-b5d8fe49f335  sw2 to es3      10.0 (Agent)        22.222222222222218  6                       0                        4
-cef0bbf4-2754-43b3-aafe-b3a253a6f12b  es2 to switch2  2.5                 9                   22.5                    0                        5
-81ab09dc-cbdc-4fc8-9306-541fac676c55  es1 to switch1  1.1111111111111112  21                  23.33333333333333       0                        6
-abdd4a39-9d91-4647-b473-a6cb84f8e0ef  sw1 to sw2      1.25 (Agent)        20                  23.33333333333333       0                        6
-029998e0-80d1-42c0-bd6a-13294570a05a  es1 to switch1  1.1111111111111112  22                  24.44444444444444       0                        7
-81ab09dc-cbdc-4fc8-9306-541fac676c55  sw1 to sw2      1.25 (Agent)        21                  24.44444444444444       0                        7
-15affd22-0f29-43af-921b-bbd75f136821  es2 to switch2  2.5                 10                  25.0                    0                        8
-cd7644a5-7c37-4cd9-a018-8202e14d7283  es1 to switch1  1.1111111111111112  23                  25.55555555555555       0                        9
-029998e0-80d1-42c0-bd6a-13294570a05a  sw1 to sw2      1.25 (Agent)        22                  25.55555555555555       0                        9
-bd09d708-5d4d-451c-9587-0de5b517f3d0  es1 to switch1  1.1111111111111112  24                  26.66666666666666       0                        10
-cd7644a5-7c37-4cd9-a018-8202e14d7283  sw1 to sw2      1.25 (Agent)        23                  26.66666666666666       0                        10
-7885e542-88b2-423a-91f6-48bc843dfd51  es2 to switch2  2.5                 11                  27.5                    0                        11
-97069d09-8ac7-4a57-b2b8-fb17777f0ade  es1 to switch1  1.1111111111111112  25                  27.77777777777777       0                        12
-bd09d708-5d4d-451c-9587-0de5b517f3d0  sw1 to sw2      1.25 (Agent)        24                  27.77777777777777       0                        12
-31cb940d-1183-4c56-a5d5-74371f607ee8  es1 to switch1  1.1111111111111112  26                  28.888888888888882      0                        13
-97069d09-8ac7-4a57-b2b8-fb17777f0ade  sw1 to sw2      1.25 (Agent)        25                  28.888888888888882      0                        13
-0fc17b8c-aa8d-460d-99cf-86916045b569  es1 to switch1  1.1111111111111112  27                  29.999999999999993      0                        14
-31cb940d-1183-4c56-a5d5-74371f607ee8  sw1 to sw2      1.25 (Agent)        26                  29.999999999999993      0                        14
-260b35cb-f3b5-4702-bbdf-4e75fb6c9f66  sw2 to sw1      1.25 (Agent)        15                  29.999999999999993      1                        13
-2f04e484-2c69-4084-8c2d-83331bc06597  sw2 to sw1      1.25 (Agent)        16                  29.999999999999993      2                        12
-4fa2d5f1-0089-4552-8250-8bf66b5ca1cf  sw2 to sw1      1.25 (Agent)        7                   29.999999999999993      3                        11
-1e11f2e3-85f4-4b1f-bf74-a66674b80679  sw2 to sw1      1.25 (Agent)        3                   29.999999999999993      4                        10
-f8af2445-c4b5-46db-be34-192271a3cf50  sw2 to sw1      1.25 (Agent)        8                   29.999999999999993      5                        9
-abdd4a39-9d91-4647-b473-a6cb84f8e0ef  sw2 to sw1      1.25 (Agent)        20                  29.999999999999993      6                        8
-260b35cb-f3b5-4702-bbdf-4e75fb6c9f66  sw1 to sw2      1.25 (Agent)        15                  29.999999999999993      5                        9
-81ab09dc-cbdc-4fc8-9306-541fac676c55  sw2 to sw1      1.25 (Agent)        21                  29.999999999999993      6                        8
-cef0bbf4-2754-43b3-aafe-b3a253a6f12b  sw2 to sw1      1.25 (Agent)        9                   29.999999999999993      7                        7
-029998e0-80d1-42c0-bd6a-13294570a05a  sw2 to sw1      1.25 (Agent)        22                  29.999999999999993      8                        6
-cd7644a5-7c37-4cd9-a018-8202e14d7283  sw2 to sw1      1.25 (Agent)        23                  29.999999999999993      9                        5
-2f04e484-2c69-4084-8c2d-83331bc06597  sw1 to sw2      1.25 (Agent)        16                  29.999999999999993      8                        6
-4fa2d5f1-0089-4552-8250-8bf66b5ca1cf  sw1 to es3      10.0 (Agent)        29.999999999999993  7                       7                        6
-15affd22-0f29-43af-921b-bbd75f136821  sw2 to es3      10.0 (Agent)        29.999999999999993  10                      7                        5
-1e11f2e3-85f4-4b1f-bf74-a66674b80679  sw1 to sw2      1.25 (Agent)        3                   29.999999999999993      6                        6
-bd09d708-5d4d-451c-9587-0de5b517f3d0  sw2 to es3      10.0 (Agent)        29.999999999999993  24                      6                        5
-f8af2445-c4b5-46db-be34-192271a3cf50  sw1 to es3      10.0 (Agent)        29.999999999999993  8                       5                        5
-abdd4a39-9d91-4647-b473-a6cb84f8e0ef  sw1 to sw2      1.25 (Agent)        20                  29.999999999999993      4                        6
-97069d09-8ac7-4a57-b2b8-fb17777f0ade  sw2 to sw1      1.25 (Agent)        25                  29.999999999999993      5                        5
-31cb940d-1183-4c56-a5d5-74371f607ee8  sw2 to es3      10.0 (Agent)        29.999999999999993  26                      5                        4
-81ab09dc-cbdc-4fc8-9306-541fac676c55  sw1 to sw2      1.25 (Agent)        21                  29.999999999999993      4                        5
-260b35cb-f3b5-4702-bbdf-4e75fb6c9f66  sw2 to sw1      1.25 (Agent)        15                  29.999999999999993      5                        4
-cef0bbf4-2754-43b3-aafe-b3a253a6f12b  sw1 to es3      10.0 (Agent)        29.999999999999993  9                       4                        4
-2f04e484-2c69-4084-8c2d-83331bc06597  sw2 to sw1      1.25 (Agent)        16                  29.999999999999993      5                        3
-029998e0-80d1-42c0-bd6a-13294570a05a  sw1 to es3      10.0 (Agent)        29.999999999999993  22                      4                        3
-cd7644a5-7c37-4cd9-a018-8202e14d7283  sw1 to es3      10.0 (Agent)        29.999999999999993  23                      3                        3
-1e11f2e3-85f4-4b1f-bf74-a66674b80679  sw2 to sw1      1.25 (Agent)        3                   29.999999999999993      4                        2
-abdd4a39-9d91-4647-b473-a6cb84f8e0ef  sw2 to sw1      1.25 (Agent)        20                  29.999999999999993      5                        1
-81ab09dc-cbdc-4fc8-9306-541fac676c55  sw2 to sw1      1.25 (Agent)        21                  29.999999999999993      6                        0
-a369ebed-6d5b-4597-9593-d1d0f21f9f3b  es2 to switch2  2.5                 12                  30.0                    6                        0
-7885e542-88b2-423a-91f6-48bc843dfd51  sw2 to es3      10.0 (Agent)        30.0                11                      6                        0
-97069d09-8ac7-4a57-b2b8-fb17777f0ade  sw1 to es3      10.0 (Agent)        30.0                25                      5                        0
-260b35cb-f3b5-4702-bbdf-4e75fb6c9f66  sw1 to sw2      1.25 (Agent)        15                  30.0                    4                        1
-260b35cb-f3b5-4702-bbdf-4e75fb6c9f66  sw2 to sw1      1.25 (Agent)        15                  30.0                    5                        0
-2f04e484-2c69-4084-8c2d-83331bc06597  sw1 to es3      10.0 (Agent)        30.0                16                      4                        0
-1e11f2e3-85f4-4b1f-bf74-a66674b80679  sw1 to es3      10.0 (Agent)        30.0                3                       3                        0
-cf971d8f-444b-4d21-bcad-e07ac0ae9a97  es1 to switch1  1.1111111111111112  28                  31.111111111111104      4                        0
-9a5674e8-41fa-49ac-878a-e787d0e86cbe  es1 to switch1  1.1111111111111112  29                  32.222222222222214      5                        0
-e7b438f2-974f-47c2-a098-b4bd2250ea2e  es2 to switch2  2.5                 13                  32.5                    6                        0
-a369ebed-6d5b-4597-9593-d1d0f21f9f3b  sw2 to sw1      1.25 (Agent)        12                  32.5                    6                        0
-e27bd790-5dd0-4469-ba29-f9a8aa610652  es1 to switch1  1.1111111111111112  30                  33.33333333333333       7                        0
-01f1a02d-bc3e-48c0-8673-4186f091a89e  es1 to switch1  1.1111111111111112  31                  34.44444444444444       8                        0
-2aa67bb2-cc78-4d86-9fd0-cf52127ba4b8  es2 to switch2  2.5                 14                  35.0                    9                        0
-e7b438f2-974f-47c2-a098-b4bd2250ea2e  sw2 to sw1      1.25 (Agent)        13                  35.0                    9                        0
-daecd80e-77c7-4fba-bf08-fdd09efcf853  es1 to switch1  1.1111111111111112  32                  35.55555555555556       10                       0
-07efa793-8c5a-4b1f-a8fa-6995211dcf8e  es1 to switch1  1.1111111111111112  33                  36.66666666666667       11                       0
-8b3116e1-0bf7-4c31-8d86-f4829bf9aac1  es2 to switch2  2.5                 15                  37.5                    11                       0
-2aa67bb2-cc78-4d86-9fd0-cf52127ba4b8  sw2 to es3      10.0 (Agent)        37.5                14                      11                       0
-e0ff23de-b217-4d22-b99f-8dee449193c8  es1 to switch1  1.1111111111111112  34                  37.777777777777786      12                       0
-c1a69e45-646f-4a21-964d-9e3c39b7c76b  es1 to switch1  1.1111111111111112  35                  38.8888888888889        13                       0
-1632325c-4277-49a3-a5b8-a21b03e5a553  es2 to switch2  2.5                 16                  40.0                    14                       0
-8b3116e1-0bf7-4c31-8d86-f4829bf9aac1  sw2 to sw1      1.25 (Agent)        15                  40.0                    14                       0
-a450f56e-41fb-4a42-8b41-261286a9158a  es1 to switch1  1.1111111111111112  36                  40.000000000000014      15                       0
-d7c06cad-c91d-4cd9-9860-ddc18cee05aa  es1 to switch1  1.1111111111111112  37                  41.11111111111113       16                       0
-2e9a6694-f6fd-40ed-947b-fd867fad8985  es1 to switch1  1.1111111111111112  38                  42.22222222222224       17                       0
-1df5a621-efb6-4e0c-b48a-1e9776767693  es2 to switch2  2.5                 17                  42.5                    18                       0
-1632325c-4277-49a3-a5b8-a21b03e5a553  sw2 to sw1      1.25 (Agent)        16                  42.5                    18                       0
-abdd4a39-9d91-4647-b473-a6cb84f8e0ef  sw1 to es3      10.0 (Agent)        42.5                20                      17                       0
-b689a47a-783c-4d1a-83e3-824d1a36810f  es1 to switch1  1.1111111111111112  39                  43.33333333333336       18                       0
-276c49ff-a167-4efb-a663-32cf1401c9bd  es1 to switch1  1.1111111111111112  40                  44.44444444444447       19                       0
-7df16b63-10b5-4481-a089-74efbe1d65f0  es2 to switch2  2.5                 18                  45.0                    20                       0
-1df5a621-efb6-4e0c-b48a-1e9776767693  sw2 to sw1      1.25 (Agent)        17                  45.0                    20                       0
-81ab09dc-cbdc-4fc8-9306-541fac676c55  sw1 to sw2      1.25 (Agent)        21                  45.0                    19                       1
-260b35cb-f3b5-4702-bbdf-4e75fb6c9f66  sw1 to sw2      1.25 (Agent)        15                  45.0                    18                       2
-81ab09dc-cbdc-4fc8-9306-541fac676c55  sw2 to sw1      1.25 (Agent)        21                  45.0                    19                       1
-260b35cb-f3b5-4702-bbdf-4e75fb6c9f66  sw2 to sw1      1.25 (Agent)        15                  45.0                    20                       0
-b3a12389-87b5-42df-a958-bf05c8a77610  es1 to switch1  1.1111111111111112  41                  45.555555555555586      21                       0
-f2439223-ab3f-4d51-9990-19a972eac8ac  es1 to switch1  1.1111111111111112  42                  46.6666666666667        22                       0
-3d989dbb-6d43-40a4-81a9-6f10eeeb9a9a  es2 to switch2  2.5                 19                  47.5                    22                       0
-7df16b63-10b5-4481-a089-74efbe1d65f0  sw2 to es3      10.0 (Agent)        47.5                18                      22                       0
-8a69f28c-8071-4c95-b636-ea732a0e5d77  es1 to switch1  1.1111111111111112  43                  47.777777777777814      23                       0
-daf35bf9-2eaf-4883-b273-fb1d2f2a5283  es1 to switch1  1.1111111111111112  44                  48.88888888888893       24                       0
-31d7ee4e-468b-45a3-aaa6-daa31c3bdc8e  es2 to switch2  2.5                 20                  50.0                    25                       0
-3d989dbb-6d43-40a4-81a9-6f10eeeb9a9a  sw2 to sw1      1.25 (Agent)        19                  50.0                    25                       0
-0fc17b8c-aa8d-460d-99cf-86916045b569  sw1 to es3      10.0 (Agent)        50.0                27                      24                       0
-cf971d8f-444b-4d21-bcad-e07ac0ae9a97  sw1 to sw2      1.25 (Agent)        28                  50.0                    23                       1
-cf971d8f-444b-4d21-bcad-e07ac0ae9a97  sw2 to es3      10.0 (Agent)        50.0                28                      23                       0
-69a61129-4b1c-407f-a278-c2999f4c091c  es1 to switch1  1.1111111111111112  45                  50.00000000000004       24                       0
-c8cd1f06-b46e-41fb-931e-449c01103b58  es1 to switch1  1.1111111111111112  46                  51.11111111111116       25                       0
-a811f80c-8e41-4600-bdb3-3ef23e9e4f35  es1 to switch1  1.1111111111111112  47                  52.22222222222227       26                       0
-fc9b1ada-08ce-446b-9258-379e0ce675f1  es2 to switch2  2.5                 21                  52.5                    26                       0
-31d7ee4e-468b-45a3-aaa6-daa31c3bdc8e  sw2 to es3      10.0 (Agent)        52.5                20                      26                       0
-a369ebed-6d5b-4597-9593-d1d0f21f9f3b  sw1 to es3      10.0 (Agent)        52.5                12                      25                       0
-61a9a0f4-96be-4756-ae03-7ec9ce89d052  es1 to switch1  1.1111111111111112  48                  53.333333333333385      26                       0
-2a0dce48-4bd8-4a62-98ca-5b8058c56d0d  es1 to switch1  1.1111111111111112  49                  54.4444444444445        27                       0
-0224375f-07d2-483d-a9a1-d3502bdb9565  es2 to switch2  2.5                 22                  55.0                    27                       0
-fc9b1ada-08ce-446b-9258-379e0ce675f1  sw2 to es3      10.0 (Agent)        55.0                21                      27                       0
-eb198ba4-be9f-457a-ab2a-ef71c0b5ca97  es1 to switch1  1.1111111111111112  50                  55.555555555555614      28                       0
-e1c847fa-6831-49f8-b7d7-e8d364fc0be8  es1 to switch1  1.1111111111111112  51                  56.66666666666673       29                       0
-38e11fc8-f243-411d-a2cc-05bd45533414  es2 to switch2  2.5                 23                  57.5                    29                       0
-0224375f-07d2-483d-a9a1-d3502bdb9565  sw2 to es3      10.0 (Agent)        57.5                22                      29                       0
-9a5674e8-41fa-49ac-878a-e787d0e86cbe  sw1 to es3      10.0 (Agent)        57.5                29                      28                       0
-a45abb81-4dc9-4d26-b55b-4ded5dd9810d  es1 to switch1  1.1111111111111112  52                  57.77777777777784       29                       0
-54a90e44-7ecd-4548-a831-d8a8301c071e  es1 to switch1  1.1111111111111112  53                  58.88888888888896       30                       0
-67cca248-a7e3-4da9-b83a-795280866f82  es2 to switch2  2.5                 24                  60.0                    30                       0
-f6f0e798-995d-4055-a8b0-43559b9bf93f  es2 to switch2  2.5                 25                  62.5                    30                       1
-70095de5-bfd0-4403-be8a-a2a6ed5d3477  es2 to switch2  2.5                 26                  65.0                    30                       2
-00c605b4-93e8-4220-93a8-928ca44eb9b8  es2 to switch2  2.5                 27                  67.5                    30                       3
-9a6795e3-237a-49a4-81a5-417c69e07ca6  es2 to switch2  2.5                 28                  70.0                    30                       4
-20e303c8-93d6-4663-ae16-11da396d89ba  es2 to switch2  2.5                 29                  72.5                    30                       5
-912bb632-560f-46ac-8e3a-79f0fd9f0f1c  es2 to switch2  2.5                 30                  75.0                    30                       6
-bd502f47-59e8-4e9c-893b-b37a86bfb4a8  es2 to switch2  2.5                 31                  77.5                    30                       7
-6c343509-2538-477e-a9f5-eaa5b74d35e0  es2 to switch2  2.5                 32                  80.0                    30                       8
-3bd0c771-db95-4cd5-bdea-0c9b49f64b02  es2 to switch2  2.5                 33                  82.5                    30                       9
-49a5c1f8-afca-4ae6-8c5b-b133291cdcc9  es2 to switch2  2.5                 34                  85.0                    30                       10
-4e673905-12c1-4fea-8b73-c8b7eb1e7e10  es2 to switch2  2.5                 35                  87.5                    30                       11
-67eb6e83-edbc-4fa7-984a-d9d785f731a3  es2 to switch2  2.5                 36                  90.0                    30                       12
-4293d88f-3dff-4d6d-8dd1-61c95991b8f1  es2 to switch2  2.5                 37                  92.5                    30                       13
-4ade3a80-9ab4-4069-bb24-26b7cb634194  es2 to switch2  2.5                 38                  95.0                    30                       14
-7b89e7e3-2868-45a3-a14e-928c414ba753  es2 to switch2  2.5                 39                  97.5                    30                       15
-cc15b7ad-5f5d-4b9c-b8df-adc70235df73  es2 to switch2  2.5                 40                  100.0                   30                       16
-218cc94b-e6ca-4a91-b843-78c2b90d7647  es2 to switch2  2.5                 41                  102.5                   30                       17
-32fce1ed-e4e2-42d3-b1a2-ad689a27e432  es2 to switch2  2.5                 42                  105.0                   30                       18
-6d014494-2f6c-43dc-bdd8-c378b839c166  es2 to switch2  2.5                 43                  107.5                   30                       19
-c49f9d6f-d492-4c1b-970a-3f8eea3afb6f  es2 to switch2  2.5                 44                  110.0                   30                       20
-94c1c5f5-613f-4e31-9bec-4cfaaae652cd  es2 to switch2  2.5                 45                  112.5                   30                       21
-b9c91ed8-fdc5-452f-8d6e-10a767cf05ec  es2 to switch2  2.5                 46                  115.0                   30                       22
-72bed6e1-700b-4f7d-8e83-1b573148ff4c  es2 to switch2  2.5                 47                  117.5                   30                       23
-d47f23c6-c810-411d-977c-bcf6d264a08f  es2 to switch2  2.5                 48                  120.0                   30                       24
-ddeacd28-cce5-4320-993c-a047f96c7724  es2 to switch2  2.5                 49                  122.5                   30                       25
-864dae33-7762-4f40-a25f-05636fe797c5  es2 to switch2  2.5                 50                  125.0                   30                       26
-1432c15c-cc84-402e-b027-75dd50dc4773  es2 to switch2  2.5                 51.0                127.5                   30                       27
-6c7af5fb-21aa-4c78-8a88-6133bd172db2  es2 to switch2  2.5                 53.5                130.0                   30                       28
-2937b008-0c3e-4943-a9e9-6568cb38d147  es2 to switch2  2.5                 56.0                132.5                   30                       29
-3bc914f0-a1f6-4264-9d5c-7f3d62b137c6  es2 to switch2  2.5                 58.5                135.0                   30                       30
+0fbb87eb-e998-4692-9de5-2c2f02951f6f  es1 to switch1  1.1111111111111112  0                0                       0                        0
+3dbd3bc2-0d62-4221-bab6-31c70a1a0cd3  es2 to switch2  2.5                 0                0                       0                        0
+fa85ad57-a45a-4a7f-8f7f-ce409087eb44  es1 to switch1  1.1111111111111112  1                1.1111111111111112      1                        0
+b070ce1f-0177-4ffd-a785-060f5798c625  es1 to switch1  1.1111111111111112  2                2.2222222222222223      2                        0
+1ec6258d-2c03-4f78-8acf-80b54f3cd6c9  es2 to switch2  2.5                 1                2.5                     2                        1
+64867de5-bc3e-4ed8-b0ce-a4913961f92d  es1 to switch1  1.1111111111111112  3                3.3333333333333335      3                        1
+c833e3e8-d2cf-45c0-8131-a31ab4b684a7  es1 to switch1  1.1111111111111112  4                4.444444444444445       4                        1
+360cd4f3-402e-483a-98ae-488a161138e3  es2 to switch2  2.5                 2                5.0                     4                        2
+f1718583-4159-425e-b94f-802c38e651d5  es1 to switch1  1.1111111111111112  5                5.555555555555555       5                        2
+3dbd3bc2-0d62-4221-bab6-31c70a1a0cd3  sw2 to sw1      1.25 (Agent)        0                6                       6                        1
+1ec6258d-2c03-4f78-8acf-80b54f3cd6c9  sw2 to sw1      1.25 (Agent)        1                6                       7                        0
+61aad52d-05f2-46a0-9e3a-6721247a14eb  es1 to switch1  1.1111111111111112  6                6.666666666666666       8                        0
+8d365788-1260-4aef-86e9-2d2a6757fec6  es2 to switch2  2.5                 3                7.5                     8                        0
+360cd4f3-402e-483a-98ae-488a161138e3  sw2 to es3      10.0 (Agent)        7.5              2                       8                        0
+abb524c8-50a6-487c-b4ea-ad1d7d284aed  es1 to switch1  1.1111111111111112  7                7.777777777777777       9                        0
+ecd8f6d6-e33c-44cf-89f2-bbadd2fbba59  es1 to switch1  1.1111111111111112  8                8.888888888888888       10                       0
+68df15f6-13b7-433c-ba49-c51ce432875a  es1 to switch1  1.1111111111111112  9                9.999999999999998       11                       0
+64550059-32d2-472f-86fc-b739ca4e96c6  es2 to switch2  2.5                 4                10.0                    12                       0
+8d365788-1260-4aef-86e9-2d2a6757fec6  sw2 to sw1      1.25 (Agent)        3                10.0                    12                       0
+0fbb87eb-e998-4692-9de5-2c2f02951f6f  sw1 to sw2      1.25 (Agent)        0                10.0                    11                       1
+0fbb87eb-e998-4692-9de5-2c2f02951f6f  sw2 to sw1      1.25 (Agent)        0                10.0                    12                       0
+fa85ad57-a45a-4a7f-8f7f-ce409087eb44  sw1 to sw2      1.25 (Agent)        1                10.0                    11                       1
+b070ce1f-0177-4ffd-a785-060f5798c625  sw1 to sw2      1.25 (Agent)        2                10.0                    10                       2
+fa85ad57-a45a-4a7f-8f7f-ce409087eb44  sw2 to sw1      1.25 (Agent)        1                10.0                    11                       1
+b070ce1f-0177-4ffd-a785-060f5798c625  sw2 to sw1      1.25 (Agent)        2                10.0                    12                       0
+40d0ce16-9174-40f6-b134-e9806ec7510a  es1 to switch1  1.1111111111111112  10               11.111111111111109      13                       0
+c282a75a-fca4-45df-ae18-831ad467512c  es1 to switch1  1.1111111111111112  11               12.22222222222222       14                       0
+3bdad0f4-1d92-4007-a164-f68ec047dff7  es2 to switch2  2.5                 5                12.5                    15                       0
+64550059-32d2-472f-86fc-b739ca4e96c6  sw2 to sw1      1.25 (Agent)        4                12.5                    15                       0
+64867de5-bc3e-4ed8-b0ce-a4913961f92d  sw1 to es3      10.0 (Agent)        12.5             3                       14                       0
+46ae9d05-31ce-4f35-b2f3-b190ed74c59d  es1 to switch1  1.1111111111111112  12               13.33333333333333       15                       0
+4c05d260-438f-4800-ba0a-bb123bb271d2  es1 to switch1  1.1111111111111112  13               14.444444444444441      16                       0
+061feffe-3004-4814-b7b7-deb5564b5115  es2 to switch2  2.5                 6                15.0                    17                       0
+3bdad0f4-1d92-4007-a164-f68ec047dff7  sw2 to sw1      1.25 (Agent)        5                15.0                    17                       0
+247990a3-3458-4f68-ad65-021d4e7f507a  es1 to switch1  1.1111111111111112  14               15.555555555555552      18                       0
+f70ed2c2-f711-4a76-bca9-369535aa0047  es1 to switch1  1.1111111111111112  15               16.666666666666664      19                       0
+364aa915-4853-4bba-b951-0d1bfde09f64  es2 to switch2  2.5                 7                17.5                    19                       0
+061feffe-3004-4814-b7b7-deb5564b5115  sw2 to es3      10.0 (Agent)        17.5             6                       19                       0
+d8fb8c15-aa83-40db-92f7-f823eb657ae9  es1 to switch1  1.1111111111111112  16               17.777777777777775      20                       0
+66713e2f-97d9-48b9-950f-e5ec619b5f41  es1 to switch1  1.1111111111111112  17               18.888888888888886      21                       0
+368f43f1-d937-4f56-9b14-6c69bb854c54  es1 to switch1  1.1111111111111112  18               19.999999999999996      22                       0
+7edf32fe-f13d-46be-868b-5e6bc4d2914a  es2 to switch2  2.5                 8                20.0                    23                       0
+364aa915-4853-4bba-b951-0d1bfde09f64  sw2 to sw1      1.25 (Agent)        7                20.0                    23                       0
+c833e3e8-d2cf-45c0-8131-a31ab4b684a7  sw1 to es3      10.0 (Agent)        20.0             4                       22                       0
+3dbd3bc2-0d62-4221-bab6-31c70a1a0cd3  sw1 to sw2      1.25 (Agent)        0                20.0                    21                       1
+1ec6258d-2c03-4f78-8acf-80b54f3cd6c9  sw1 to sw2      1.25 (Agent)        1                20.0                    20                       2
+f1718583-4159-425e-b94f-802c38e651d5  sw1 to es3      10.0 (Agent)        20.0             5                       19                       2
+61aad52d-05f2-46a0-9e3a-6721247a14eb  sw1 to es3      10.0 (Agent)        20.0             6                       18                       2
+abb524c8-50a6-487c-b4ea-ad1d7d284aed  sw1 to es3      10.0 (Agent)        20.0             7                       17                       2
+3dbd3bc2-0d62-4221-bab6-31c70a1a0cd3  sw2 to es3      10.0 (Agent)        20.0             0                       17                       1
+1ec6258d-2c03-4f78-8acf-80b54f3cd6c9  sw2 to sw1      1.25 (Agent)        1                20.0                    18                       0
+ecd8f6d6-e33c-44cf-89f2-bbadd2fbba59  sw1 to sw2      1.25 (Agent)        8                20.0                    17                       1
+8d365788-1260-4aef-86e9-2d2a6757fec6  sw1 to es3      10.0 (Agent)        20.0             3                       16                       1
+0fbb87eb-e998-4692-9de5-2c2f02951f6f  sw1 to es3      10.0 (Agent)        20.0             0                       15                       1
+ecd8f6d6-e33c-44cf-89f2-bbadd2fbba59  sw2 to es3      10.0 (Agent)        20.0             8                       15                       0
+fa85ad57-a45a-4a7f-8f7f-ce409087eb44  sw1 to es3      10.0 (Agent)        20.0             1                       14                       0
+2c30c6e0-12a7-4184-921a-ff7b23b3305a  es1 to switch1  1.1111111111111112  19               21.111111111111107      15                       0
+e83add95-181e-4996-9504-06dd4f78e518  es1 to switch1  1.1111111111111112  20               22.222222222222218      16                       0
+180c22a2-85f7-49bc-9156-4c2a3b546aaf  es2 to switch2  2.5                 9                22.5                    17                       0
+7edf32fe-f13d-46be-868b-5e6bc4d2914a  sw2 to sw1      1.25 (Agent)        8                22.5                    17                       0
+5de74f94-cba0-416b-aeb6-8a00619b750e  es1 to switch1  1.1111111111111112  21               23.33333333333333       18                       0
+8767fffb-6a98-4860-9165-bd61e44d9d83  es1 to switch1  1.1111111111111112  22               24.44444444444444       19                       0
+f5665b6f-e2d3-4896-ab43-04766bb98a6f  es2 to switch2  2.5                 10               25.0                    20                       0
+180c22a2-85f7-49bc-9156-4c2a3b546aaf  sw2 to sw1      1.25 (Agent)        9                25.0                    20                       0
+6074f271-a9a4-453b-b9ca-25dbfe8c0c4a  es1 to switch1  1.1111111111111112  23               25.55555555555555       21                       0
+d313b45d-65d5-4230-aa12-434246e16812  es1 to switch1  1.1111111111111112  24               26.66666666666666       22                       0
+b826a767-45e0-4390-9662-a796005d1cc2  es2 to switch2  2.5                 11               27.5                    23                       0
+f5665b6f-e2d3-4896-ab43-04766bb98a6f  sw2 to sw1      1.25 (Agent)        10               27.5                    23                       0
+b070ce1f-0177-4ffd-a785-060f5798c625  sw1 to sw2      1.25 (Agent)        2                27.5                    22                       1
+68df15f6-13b7-433c-ba49-c51ce432875a  sw1 to es3      10.0 (Agent)        27.5             9                       21                       1
+b070ce1f-0177-4ffd-a785-060f5798c625  sw2 to es3      10.0 (Agent)        27.5             2                       21                       0
+10632c4f-fc1e-404e-8538-12b7cbe40d29  es1 to switch1  1.1111111111111112  25               27.77777777777777       22                       0
+6848f92f-f560-42ab-a4f0-fe7c6f4d23d0  es1 to switch1  1.1111111111111112  26               28.888888888888882      23                       0
+9c6c0ad5-65be-4a28-87d5-0efe123a520f  es1 to switch1  1.1111111111111112  27               29.999999999999993      24                       0
+3ef179e9-a72f-42da-8e81-495758f7ad5b  es2 to switch2  2.5                 12               30.0                    25                       0
+b826a767-45e0-4390-9662-a796005d1cc2  sw2 to sw1      1.25 (Agent)        11               30.0                    25                       0
+40d0ce16-9174-40f6-b134-e9806ec7510a  sw1 to es3      10.0 (Agent)        30.0             10                      24                       0
+64550059-32d2-472f-86fc-b739ca4e96c6  sw1 to es3      10.0 (Agent)        30.0             4                       23                       0
+c282a75a-fca4-45df-ae18-831ad467512c  sw1 to sw2      1.25 (Agent)        11               30.0                    22                       1
+46ae9d05-31ce-4f35-b2f3-b190ed74c59d  sw1 to sw2      1.25 (Agent)        12               30.0                    21                       2
+3bdad0f4-1d92-4007-a164-f68ec047dff7  sw1 to es3      10.0 (Agent)        30.0             5                       20                       2
+4c05d260-438f-4800-ba0a-bb123bb271d2  sw1 to sw2      1.25 (Agent)        13               30.0                    19                       3
+c282a75a-fca4-45df-ae18-831ad467512c  sw2 to es3      10.0 (Agent)        30.0             11                      19                       2
+46ae9d05-31ce-4f35-b2f3-b190ed74c59d  sw2 to sw1      1.25 (Agent)        12               30.0                    20                       1
+247990a3-3458-4f68-ad65-021d4e7f507a  sw1 to sw2      1.25 (Agent)        14               30.0                    19                       2
+4c05d260-438f-4800-ba0a-bb123bb271d2  sw2 to es3      10.0 (Agent)        30.0             13                      19                       1
+f70ed2c2-f711-4a76-bca9-369535aa0047  sw1 to sw2      1.25 (Agent)        15               30.0                    18                       2
+247990a3-3458-4f68-ad65-021d4e7f507a  sw2 to es3      10.0 (Agent)        30.0             14                      18                       1
+d8fb8c15-aa83-40db-92f7-f823eb657ae9  sw1 to sw2      1.25 (Agent)        16               30.0                    17                       2
+f70ed2c2-f711-4a76-bca9-369535aa0047  sw2 to sw1      1.25 (Agent)        15               30.0                    18                       1
+66713e2f-97d9-48b9-950f-e5ec619b5f41  sw1 to sw2      1.25 (Agent)        17               30.0                    17                       2
+d8fb8c15-aa83-40db-92f7-f823eb657ae9  sw2 to sw1      1.25 (Agent)        16               30.0                    18                       1
+66713e2f-97d9-48b9-950f-e5ec619b5f41  sw2 to sw1      1.25 (Agent)        17               30.0                    19                       0
+15b45034-3429-48d7-b25c-dcdf6f894e34  es1 to switch1  1.1111111111111112  28               31.111111111111104      20                       0
+e6818abc-2208-4cb2-92a9-613c94e0bc7d  es1 to switch1  1.1111111111111112  29               32.222222222222214      21                       0
+553f1efe-8659-49a9-a534-5a7125fc4dc1  es2 to switch2  2.5                 13               32.5                    21                       0
+3ef179e9-a72f-42da-8e81-495758f7ad5b  sw2 to es3      10.0 (Agent)        32.5             12                      21                       0
+364aa915-4853-4bba-b951-0d1bfde09f64  sw1 to es3      10.0 (Agent)        32.5             7                       20                       0
+c83d3bcf-d689-4e0b-ae75-c3ecb821264c  es1 to switch1  1.1111111111111112  30               33.33333333333333       21                       0
+199d8d0a-9a2c-4ef0-9bbe-1a9173c81e6b  es1 to switch1  1.1111111111111112  31               34.44444444444444       22                       0
+dc7ca383-ce1c-441e-82e2-e44fd79a377d  es2 to switch2  2.5                 14               35.0                    22                       0
+553f1efe-8659-49a9-a534-5a7125fc4dc1  sw2 to es3      10.0 (Agent)        35.0             13                      22                       0
+ee66c163-6107-4ad8-8043-440964213d9d  es1 to switch1  1.1111111111111112  32               35.55555555555556       23                       0
+01aa5834-af40-43c6-8134-1ac6f71e6d24  es1 to switch1  1.1111111111111112  33               36.66666666666667       24                       0
+789794e5-2663-4ab3-be14-5150a2845600  es2 to switch2  2.5                 15               37.5                    24                       0
+dc7ca383-ce1c-441e-82e2-e44fd79a377d  sw2 to es3      10.0 (Agent)        37.5             14                      24                       0
+1ec6258d-2c03-4f78-8acf-80b54f3cd6c9  sw1 to es3      10.0 (Agent)        37.5             1                       23                       0
+368f43f1-d937-4f56-9b14-6c69bb854c54  sw1 to sw2      1.25 (Agent)        18               37.5                    22                       1
+2c30c6e0-12a7-4184-921a-ff7b23b3305a  sw1 to es3      10.0 (Agent)        37.5             19                      21                       1
+368f43f1-d937-4f56-9b14-6c69bb854c54  sw2 to sw1      1.25 (Agent)        18               37.5                    22                       0
+7edf32fe-f13d-46be-868b-5e6bc4d2914a  sw1 to es3      10.0 (Agent)        37.5             8                       21                       0
+2ae4f818-00b1-4f09-8206-07dcf872a86a  es1 to switch1  1.1111111111111112  34               37.777777777777786      22                       0
+dc1ec901-8a46-4809-8653-3de7325f6b93  es1 to switch1  1.1111111111111112  35               38.8888888888889        23                       0
+5f99cb8a-ff58-4eec-bf2d-50b0792fafcc  es2 to switch2  2.5                 16               40.0                    23                       0
+789794e5-2663-4ab3-be14-5150a2845600  sw2 to es3      10.0 (Agent)        40.0             15                      23                       0
+e83add95-181e-4996-9504-06dd4f78e518  sw1 to es3      10.0 (Agent)        40.0             20                      22                       0
+1fad4090-0253-413c-9327-a4093ca7fe3a  es1 to switch1  1.1111111111111112  36               40.000000000000014      23                       0
+fc155cf8-8936-4ae6-8c7a-68d9163da917  es1 to switch1  1.1111111111111112  37               41.11111111111113       24                       0
+7eb9e14d-de23-4086-974a-f81c6d1e621c  es1 to switch1  1.1111111111111112  38               42.22222222222224       25                       0
+c512f266-d69e-4926-9e32-0a50f77df2bd  es2 to switch2  2.5                 17               42.5                    25                       0
+5f99cb8a-ff58-4eec-bf2d-50b0792fafcc  sw2 to es3      10.0 (Agent)        42.5             16                      25                       0
+29404d6c-0d3a-49b2-abb3-fd103e78857c  es1 to switch1  1.1111111111111112  39               43.33333333333336       26                       0
+d14355fa-c917-4b54-8608-fff0a6c3d4fd  es1 to switch1  1.1111111111111112  40               44.44444444444447       27                       0
+03a9927b-7024-46b4-8965-208bbc7caa3b  es2 to switch2  2.5                 18               45.0                    27                       0
+c512f266-d69e-4926-9e32-0a50f77df2bd  sw2 to es3      10.0 (Agent)        45.0             17                      27                       0
+8437715f-1017-4de2-a17d-67e7bcf3521b  es1 to switch1  1.1111111111111112  41               45.555555555555586      28                       0
+f7e2c6f3-b729-4829-ac50-5caa4cf7b711  es1 to switch1  1.1111111111111112  42               46.6666666666667        29                       0
+c7a147fe-2786-4276-b13d-014f788f0467  es2 to switch2  2.5                 19               47.5                    30                       0
+03a9927b-7024-46b4-8965-208bbc7caa3b  sw2 to sw1      1.25 (Agent)        18               47.5                    30                       0
+18263464-a4f3-4c65-9787-790f9c0a2a75  es2 to switch2  2.5                 20               50.0                    30                       0
+89a5a75f-25ad-40f1-a946-a69d51f38209  es2 to switch2  2.5                 21               52.5                    30                       1
+c559b24a-898d-4358-a56f-41f53e22f046  es2 to switch2  2.5                 22               55.0                    30                       2
+e79ec245-fdb3-4d0a-9b83-a45bb44b45f5  es2 to switch2  2.5                 23               57.5                    30                       3
+a4d9f98b-45d9-4a45-b818-a56b484a3f57  es2 to switch2  2.5                 24               60.0                    30                       4
+32dc1f4a-db9c-4f9c-aa01-e8efeebda5dc  es2 to switch2  2.5                 25               62.5                    30                       5
+e310dc86-86f6-46b3-9353-a90db1170c52  es2 to switch2  2.5                 26               65.0                    30                       6
+94f1628b-088a-45ea-9abd-eacbc10840b9  es2 to switch2  2.5                 27               67.5                    30                       7
+544b6197-8347-4b32-963a-75202b4b2bcb  es2 to switch2  2.5                 28               70.0                    30                       8
+a6fa6362-093e-423c-bfbb-af2936b7b619  es2 to switch2  2.5                 29               72.5                    30                       9
+1aa88e3b-9a7f-48e7-ac3e-fd396928177e  es2 to switch2  2.5                 30               75.0                    30                       10
+7784fa36-b22b-420a-92f9-c5260fafc9c0  es2 to switch2  2.5                 31               77.5                    30                       11
+b738ab5d-cbd3-4512-9edb-bb914651b84c  es2 to switch2  2.5                 32               80.0                    30                       12
+f8ac9f88-8d90-4679-b8f5-b17125e04e73  es2 to switch2  2.5                 33               82.5                    30                       13
+6ebe2220-c193-473b-9a64-3ab7c867ce50  es2 to switch2  2.5                 34               85.0                    30                       14
+0b15ae61-de7e-49c0-aa18-d5c063530c85  es2 to switch2  2.5                 35               87.5                    30                       15
+a0b1cce3-6926-41e7-bf94-a1b83feae53e  es2 to switch2  2.5                 36               90.0                    30                       16
+dfbd2527-8860-4966-8488-35611f9bb701  es2 to switch2  2.5                 37               92.5                    30                       17
+ac65cc7c-5b5a-4135-b84a-5bf180eac750  es2 to switch2  2.5                 38               95.0                    30                       18
+27b83f2a-5f53-415c-8c10-a0dd94677419  es2 to switch2  2.5                 39               97.5                    30                       19
+382f018c-a99a-4911-99f4-6b45c2ed2669  es2 to switch2  2.5                 40               100.0                   30                       20
+4cfafff9-d5c2-4d7c-8db7-a4a1c555ab8e  es2 to switch2  2.5                 41               102.5                   30                       21
+1ee990fb-794a-42a8-8b4f-c298020b99d5  es2 to switch2  2.5                 42               105.0                   30                       22
+83528d80-39f0-4a4d-9d3b-e3296002b291  es2 to switch2  2.5                 43               107.5                   30                       23
+ee29d4d3-80c9-420e-80d3-8aed288988aa  es2 to switch2  2.5                 44               110.0                   30                       24
+3f502881-eafc-4077-95c2-8bc5d9b45cb5  es2 to switch2  2.5                 45               112.5                   30                       25
+541d8e1b-24e4-45a8-99da-21f542c7697f  es2 to switch2  2.5                 46               115.0                   30                       26
+646e64e9-1083-45c2-8bf8-19f80e2ea8c6  es2 to switch2  2.5                 47               117.5                   30                       27
+e4d3f9c0-7ee2-4620-9ed8-fa46872a00ba  es2 to switch2  2.5                 48               120.0                   30                       28
+b805bd16-f8cb-43ad-b018-4095f468edb6  es2 to switch2  2.5                 49               122.5                   30                       29
+f71dfb0b-a078-4bf0-9233-5d6e47e3f9ff  es2 to switch2  2.5                 50               125.0                   30                       30
