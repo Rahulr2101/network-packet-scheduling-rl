@@ -3,18 +3,13 @@ import uuid
 import tabulate
 import numpy as np
 import random
-
+import matplotlib.pyplot as plt
 
 packet_size = 1000
 packet_time = 6
 logs_list = []
-num_states = 91
-num_actions = 4
-
-# Create a NumPy array with zeros for 91 states and 4 actions
-array_shape = (num_states, num_actions)
-
-
+episodes = 35000
+rewards_per_episode = np.zeros(episodes)
 q = np.zeros((30, 30,4))
 
 class Packet:
@@ -78,28 +73,34 @@ def display():
 def CalculateTransmissionDelay(speed):
         return packet_size/speed      
       
-def rewardCal(now, timestamp):
-        reward = 0
-        if timestamp + 20  < now :
-            return 2
+def rewardCal(now, timestamp,action,nw):
+        overtime_threshold = 30
+       
+       
+        if action == 2 or action == 3:
+            if timestamp + overtime_threshold > now :
+                return 10
+            else:
+                return -1 * (now - (timestamp + overtime_threshold))
         else:
-            return -8
+            if action == 0 and len(nw.sw1.items) >= len(nw.sw2.items):
+                return 2
+            elif action == 2 and len(nw.sw2.items) >= len(nw.sw1.items):
+                return 2
+            else:
+                return -1
+                    
         
 def model(env):
      
-       
-        episodes = 1000
         learning_rate_a = 0.9
         discount_factor_g = 0.9
         epsilon = 1
-        epsilon_decay_rate = 0.0001
+        epsilon_decay_rate = 0.0000303
         rng = np.random.default_rng()
-        rewards_per_episode = np.zeros(episodes)
         start = 0
         
 
-        # print(q)
-        
        
         for i in range(episodes):
             
@@ -113,22 +114,25 @@ def model(env):
             host_process2 = env.process(nw.packet_generator("es2","switch2",nw.es2))
             switch_process1 = env.process(nw.switch( nw.es1, nw.sw1,nw.link_speeds["sw1"]["es1"]))
             switch_process2 = env.process(nw.switch(nw.es2,nw.sw2,nw.link_speeds["sw2"]["es2"]))
-           
+            episode_reward = 0
             
-            yield env.timeout(10)     
+            yield env.timeout(5)     
             start += 100 
             state = [len(nw.sw1.items),len(nw.sw2.items)]
-            while  env.now < start and (len(nw.es1.items) != 0 or len(nw.es2.items) != 0) :
+            while  env.now < start:
+                
                 yield env.timeout(1)
                 if rng.random()< epsilon:
-                    print(f'value = {len(list(nw.actions_step.keys()))}')
                     action = random.randint(0,len(list(nw.actions_step.keys()))-1)
                 else:
-                    action = np.argmax(q[state,:])
-                print(state)
-                print(q[state, :])
-                print(f'action = {action}')
-                return
+                    action = np.argmax(q[state[0],state[1],:])
+                
+                
+                if len(nw.sw1.items) == 0 and (action == 0 or action == 2):
+                    continue
+                if len(nw.sw2.items) == 0 and (action == 1 or action == 3):
+                    continue
+                
                 if nw.actions_step[action] == "sw1_to_sw2":
                     packet =  yield nw.sw1.get()
                     yield nw.sw2.put(packet)
@@ -139,14 +143,12 @@ def model(env):
                 elif nw.actions_step[action]=="sw2_to_sw1" :
                     packet = yield nw.sw2.get()
                     yield nw.sw1.put(packet)
-                    
                     logs_list.append([packet.id,"sw2" +" to " + "sw1",f"{CalculateTransmissionDelay(nw.link_speeds["sw2"]["sw1"])} (Agent)",env.now - packet.timestamp,env.now,len(nw.sw1.items),len(nw.sw2.items) ])
 
                     
                 elif nw.actions_step[action] == "sw1_to_dest":
                     packet = yield nw.sw1.get()
                     yield nw.es3.put(packet)
-                    
                     logs_list.append([packet.id,"sw1" +" to " + "es3",f"{CalculateTransmissionDelay(nw.link_speeds["sw1"]["es3"])} (Agent)",env.now-packet.timestamp,env.now,len(nw.sw1.items),len(nw.sw2.items) ])
 
                     
@@ -154,32 +156,36 @@ def model(env):
                     packet = yield nw.sw2.get()
                     yield nw.es3.put(packet)
                     logs_list.append([packet.id,"sw2" +" to " + "es3",f"{CalculateTransmissionDelay(nw.link_speeds["sw2"]["es3"])} (Agent)",env.now-packet.timestamp,env.now,len(nw.sw1.items),len(nw.sw2.items) ])
-                    
-                # print(i,len(nw.sw1.items),len(nw.sw2.items),len(nw.es3.items),(len(nw.sw1.items) > 0  or len(nw.sw2.items) > 0 ))    
                 new_state = [len(nw.sw1.items),len(nw.sw2.items)]
-                reward = rewardCal(env.now,packet.timestamp)
+                print(action)
+                reward = rewardCal(env.now,packet.timestamp,action,nw)
+                episode_reward += reward
                 
-                q[state,action] = q[state,action] + learning_rate_a * (
-                    reward + discount_factor_g * np.max(q[new_state,:]) - q[state,action])
+                q[state[0],state[1],action] = q[state[0],state[1],action] + learning_rate_a * (
+                    reward + discount_factor_g * np.max(q[new_state[0],state[1],:]) - q[state[0],state[1],action])
                 state = new_state
             epsilon = max(epsilon - epsilon_decay_rate, 0)
-            # nw.flag = False
-            
+            rewards_per_episode[i] = episode_reward
             if(epsilon==0):
-                learning_rate_a = 0.0001    
-            # print("he")
-            # if reward == 1:
-            #     print("hello")
-            #     rewards_per_episode[i] = 1
+                learning_rate_a = 0.0001
                 
-def printer():
-    while True:
-        yield env.timeout(1)
-        print(env.now)
+        
+        
+
      
 env =  simpy.Environment()
 
 model_process = env.process(model(env))
-# env.process(printer())
-env.run(until =100000)
-display()
+env.run(until =20010000)
+# display()
+
+sum_rewards = np.zeros(episodes)
+for t in range(episodes):
+    sum_rewards[t] = np.sum(rewards_per_episode[max(0, t-100):(t+1)])
+
+plt.plot(sum_rewards, label="Rewards per Episode")
+plt.xlabel("Episode")
+plt.ylabel("Total Reward")
+plt.title("Rewards Collected per Episode")
+plt.legend()
+plt.savefig('model2.png')
