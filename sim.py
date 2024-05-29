@@ -70,7 +70,7 @@ class NetworkEnvironment:
         
 env =  simpy.Environment()
 nw = NetworkEnvironment(env)
-host_process1 = env.process(nw.packet_generator( "es1", "switch1", nw.es1,packet_size=700))
+host_process1 = env.process(nw.packet_generator( "es1", "switch1", nw.es1,packet_size=1000))
 host_process2 = env.process(nw.packet_generator( "es2", "switch2", nw.es2,packet_size=1000))
 switch_process1 = env.process(nw.switch( nw.es1, nw.sw1,nw.link_speeds["sw1"]["es1"]))
 env.process(nw.send_packet_to_es3(env, nw.es3,nw.sw1,nw.link_speeds["sw1"]["dest"]))
