@@ -265,7 +265,7 @@ def model(env):
 
             if is_training:
                 q[state[0], state[1], action] = q[state[0], state[1], action] + learning_rate_a * (
-                        reward + discount_factor_g * np.max(q[new_state[0], state[1], :]) - q[state[0], state[1], action])
+                        reward + discount_factor_g * np.max(q[new_state[0], new_state[1], :]) - q[state[0], state[1], action])
             state = new_state
         # nw.reset_resource()
         epsilon = max(epsilon - epsilon_decay_rate, 0)
