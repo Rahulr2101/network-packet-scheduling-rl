@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import pickle
 
 logs_list = []
-episodes = 1000
+episodes = 20000
 rewards_per_episode = np.zeros(episodes)
-overtime_threshold = 91
+overtime_threshold = 92
 is_training = False
 Total_packets =  20
 Total_packets_reached = 0
@@ -39,7 +39,7 @@ class NetworkEnvironment:
     def __init__(self, env, link_speeds={"sw1": {"es1": 900, "es3": 100, "sw2": 900},
                                          "sw2": {"es2": 600, "es3": 500, "sw1": 900}}):
         self.env = env
-        self.max_capacity = 30
+        self.max_capacity = 20
         self.es1 = simpy.Store(self.env, capacity=self.max_capacity)
         self.es2 = simpy.Store(self.env, capacity=self.max_capacity)
         self.es3 = simpy.Store(self.env, capacity=1000000)
@@ -48,11 +48,13 @@ class NetworkEnvironment:
         self.sw1_es3_resource = simpy.Resource(env, capacity=1)
         self.sw1_sw2_resource = simpy.Resource(env, capacity=1)
         self.sw2_es3_resource = simpy.Resource(env, capacity=1)
+        self.sw2_sw1_resource = simpy.Resource(env, capacity=1)
 
 
         self.sw1_sw2_expected_time = self.env.now
         self.sw1_es3_expected_time = self.env.now
         self.sw2_es3_expected_time = self.env.now
+        self.sw2_sw1_expected_time = self.env.now
 
         self.actions_step = {0: "sw1_to_sw2", 1: "sw2_to_sw1", 2: "sw1_to_dest", 3: "sw2_to_dest"}
         self.link_speeds = link_speeds
@@ -113,7 +115,7 @@ def rewardCal(now, timestamp, action, nw, env,priority,overtime):
     sw1_sw2 = len(nw.sw1_sw2_resource.queue)
     sw1_es3 = len(nw.sw1_es3_resource.queue)
     sw2_es3 = len(nw.sw2_es3_resource.queue)
-
+    
     # if action == 0 or action == 1:
     #     expected_time = max((nw.sw1_sw2_expected_time - now),0)
     # elif action == 2:
@@ -123,7 +125,7 @@ def rewardCal(now, timestamp, action, nw, env,priority,overtime):
     # else:
     #     expected_time = 0
 
-    expected_time =  max(nw.sw1_sw2_expected_time, nw.sw1_es3_expected_time, nw.sw2_es3_expected_time)
+    expected_time =  max(nw.sw1_sw2_expected_time, nw.sw1_es3_expected_time, nw.sw2_es3_expected_time,nw.sw2_sw1_expected_time)
 
 
     # if priority == 1:
@@ -139,7 +141,6 @@ def rewardCal(now, timestamp, action, nw, env,priority,overtime):
         else:
             if overtime_threshold < expected_time:
                 reward -= delay_penalty * (expected_time - overtime_threshold)
-    print(reward ,overtime_threshold)
     # if action == 0 and (len(nw.sw2.items)+ len(nw.sw2_es3_resource.queue) ) == 0:
     #     reward += 2
     # if action == 1 and (len(nw.sw1.items)+ len(nw.sw1_es3_resource.queue) ) == 0:
@@ -160,7 +161,7 @@ def rewardCal(now, timestamp, action, nw, env,priority,overtime):
         # reward -= balance_reward * queue_length_diff
 
         # Penalty for excessive queue lengths
-    if len(nw.sw1.items) > nw.max_capacity or len(nw.sw2.items) > nw.max_capacity:
+    if len(nw.sw1.items) > nw.max_capacity/2 or len(nw.sw2.items) > nw.max_capacity/2:
             reward -= 10
 
 
@@ -202,7 +203,7 @@ def resource_handler(nw, action, packet, env, TransmissionDelay, state):
             yield request
             yield env.timeout(TransmissionDelay)
             yield nw.sw2.put(packet)
-            logs_list.append([f"{packet.id} priority:{packet.priority}", transfer, f"{TransmissionDelay} (Agent)", env.now - packet.timestamp, env.now, len(nw.sw1.items) + len(nw.sw1_es3_resource.queue), len(nw.sw1.items) + len(nw.sw2_es3_resource.queue)])
+            logs_list.append([f"{packet.id} priority:{packet.priority}", transfer, f"{TransmissionDelay} (Agent)", env.now - packet.timestamp, env.now, len(nw.sw1.items) + len(nw.sw1_es3_resource.queue)+ len(nw.sw1_sw2_resource.queue), len(nw.sw2.items) + len(nw.sw2_es3_resource.queue)+len(nw.sw2_sw1_resource.queue)])
 
 
 
@@ -217,7 +218,7 @@ def resource_handler(nw, action, packet, env, TransmissionDelay, state):
             yield request
             yield env.timeout(TransmissionDelay)
             yield nw.sw1.put(packet)
-            logs_list.append([f"{packet.id} priority:{packet.priority}", transfer, f"{TransmissionDelay} (Agent)", env.now - packet.timestamp, env.now, len(nw.sw1.items) + len(nw.sw1_es3_resource.queue), len(nw.sw1.items) + len(nw.sw2_es3_resource.queue)])
+            logs_list.append([f"{packet.id} priority:{packet.priority}", transfer, f"{TransmissionDelay} (Agent)", env.now - packet.timestamp, env.now, len(nw.sw1.items) + len(nw.sw1_es3_resource.queue) +  len(nw.sw1_sw2_resource.queue), len(nw.sw2.items) + len(nw.sw2_es3_resource.queue) + len(nw.sw2_sw1_resource.queue)])
 
 
 
@@ -233,7 +234,7 @@ def resource_handler(nw, action, packet, env, TransmissionDelay, state):
             yield request
             yield env.timeout(TransmissionDelay)
             yield nw.es3.put(packet)
-            logs_list.append([f"{packet.id} priority:{packet.priority}", transfer, f"{TransmissionDelay} (Agent)", env.now - packet.timestamp, env.now, len(nw.sw1.items) + len(nw.sw1_es3_resource.queue), len(nw.sw1.items) + len(nw.sw2_es3_resource.queue)])
+            logs_list.append([f"{packet.id} priority:{packet.priority}", transfer, f"{TransmissionDelay} (Agent)", env.now - packet.timestamp, env.now, len(nw.sw1.items) + len(nw.sw1_es3_resource.queue) +  len(nw.sw1_sw2_resource.queue), len(nw.sw2.items) + len(nw.sw2_es3_resource.queue) +  len(nw.sw2_sw1_resource.queue)])
 
 
     elif action == 3:
@@ -248,7 +249,7 @@ def resource_handler(nw, action, packet, env, TransmissionDelay, state):
             yield request
             yield env.timeout(TransmissionDelay)
             yield nw.es3.put(packet)
-            logs_list.append([f"{packet.id} priority:{packet.priority}", transfer, f"{TransmissionDelay} (Agent)", env.now - packet.timestamp, env.now, len(nw.sw1.items) + len(nw.sw1_es3_resource.queue), len(nw.sw1.items) + len(nw.sw2_es3_resource.queue)])
+            logs_list.append([f"{packet.id} priority:{packet.priority}", transfer, f"{TransmissionDelay} (Agent)", env.now - packet.timestamp, env.now, len(nw.sw1.items) + len(nw.sw1_es3_resource.queue) +  len(nw.sw1_sw2_resource.queue), len(nw.sw2.items) + len(nw.sw2_es3_resource.queue) +  len(nw.sw2_sw1_resource.queue)])
 
     
 def model(env):
@@ -269,7 +270,8 @@ def model(env):
         switch_process1 = env.process(nw.switch(nw.es1, nw.sw1, nw.link_speeds["sw1"]["es1"]))
         switch_process2 = env.process(nw.switch(nw.es2, nw.sw2, nw.link_speeds["sw2"]["es2"]))
         episode_reward = 0
-        overtime_threshold += start
+        if i !=0:
+            overtime_threshold += 200
         start += 200
         state = [len(nw.sw1.items), len(nw.sw2.items)]
         Total_packets_reached = 0
@@ -277,6 +279,7 @@ def model(env):
         nw.sw1_es3_expected_time = env.now
         nw.sw1_sw2_expected_time = env.now
         nw.sw2_es3_expected_time = env.now
+        nw.sw2_sw1_expected_time = env.now
         while env.now < start:
             yield env.timeout(0.1)
             if  int(env.now)%2  == 2:
@@ -291,14 +294,18 @@ def model(env):
                 continue
             if nw.actions_step[action] == "sw1_to_sw2":
                 packet = yield nw.sw1.get()
-                env.process(resource_handler(nw, action, packet, env, CalculateTransmissionDelay(nw=nw, action=action,packet=packet), state))
-
-            elif nw.actions_step[action] == "sw2_to_sw1":
-                packet = yield nw.sw2.get()
                 if nw.sw1_sw2_expected_time < env.now:
                     nw.sw1_sw2_expected_time = env.now + CalculateTransmissionDelay(nw=nw, action=action,packet=packet)
                 else:
                     nw.sw1_sw2_expected_time +=  CalculateTransmissionDelay(nw=nw, action=action,packet=packet)
+                env.process(resource_handler(nw, action, packet, env, CalculateTransmissionDelay(nw=nw, action=action,packet=packet), state))
+
+            elif nw.actions_step[action] == "sw2_to_sw1":
+                packet = yield nw.sw2.get()
+                if nw.sw2_sw1_expected_time < env.now:
+                    nw.sw2_sw1_expected_time = env.now + CalculateTransmissionDelay(nw=nw, action=action,packet=packet)
+                else:
+                    nw.sw2_sw1_expected_time +=  CalculateTransmissionDelay(nw=nw, action=action,packet=packet)
                 env.process(resource_handler(nw, action, packet, env, CalculateTransmissionDelay(nw=nw, action=action,packet=packet), state))
 
             elif nw.actions_step[action] == "sw1_to_dest":
@@ -319,13 +326,14 @@ def model(env):
             new_state = [len(nw.sw1.items), len(nw.sw2.items)]
             reward = rewardCal(env.now, packet.timestamp, action, nw, env,priority = packet.priority,overtime = overtime_threshold)
             episode_reward += reward
-
+          
             if is_training:
                 q[state[0], state[1], action] = q[state[0], state[1], action] + learning_rate_a * (
                         reward + discount_factor_g * np.max(q[new_state[0], new_state[1], :]) - q[state[0], state[1], action])
             state = new_state
+            
         # nw.reset_resource()
-        print(f"total reward = {episode_reward}")
+        # print(f"total reward = {episode_reward}  env:{env.now} epsoides = {i} overtime:{overtime_threshold}  {max(nw.sw1_sw2_expected_time, nw.sw1_es3_expected_time, nw.sw2_es3_expected_time,nw.sw2_sw1_expected_time)}")
         epsilon = max(epsilon - epsilon_decay_rate, 0)
         rewards_per_episode[i] = episode_reward
         if epsilon == 0:
@@ -348,7 +356,7 @@ plt.ylabel("Total Reward")
 plt.title("Rewards Collected per Episode")
 plt.legend()
 
-if not is_training:
+if is_training:
     plt.savefig('model5003.png')
     with open("nw.pkl", "wb") as f:
         pickle.dump(q, f)
