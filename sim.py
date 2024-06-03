@@ -50,6 +50,8 @@ class NetworkEnvironment:
         """
         while True:
             packet = yield sw.get()
+            if env.now - packet.timestamp < 30:
+                print("packet dropped")
             transmission_delay = packet.packet_size / speed
             packet.dst = "es3"
             self.logs_list.append([packet.id,packet.src +" to " + "es3",f"{transmission_delay}   {packet.timestamp}",self.env.now,len(self.sw1.items),len(self.sw2.items) ])
