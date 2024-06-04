@@ -20,7 +20,7 @@ if not is_training:
     with open('nw.pkl', 'rb') as f:
         q = pickle.load(f)
 else:
-    q = np.zeros((30, 30, 4))
+    q = np.zeros((20, 20, 4))
 
 
 
@@ -81,11 +81,13 @@ class NetworkEnvironment:
 
     def packet_generator(self, src, dst, host,packet_size,priority,packet_number):
         while packet_number > 0:
-            packet = Packet(uuid.uuid4(),src= src,dst=dst, packet_size= packet_size,priority=priority,timestamp=self.env.now)
+            delay = random.randint(1, 5)
+            packet = Packet(uuid.uuid4(),src= src,dst=dst, packet_size= packet_size,priority=priority,timestamp=self.env.now+delay)
             yield host.put(packet)
+            
             packet_number -= 1
             
-            yield self.env.timeout(1)
+            yield self.env.timeout(delay)
        
 
 
@@ -266,7 +268,7 @@ def resource_handler(nw, action, packet, env, TransmissionDelay, state):
     
 def model(env):
     global Total_packets_reached,overtime_threshold
-    learning_rate_a = 0.9
+    learning_rate_a = 0.3
     discount_factor_g = 0.99
     epsilon = 1
     epsilon_decay_rate = 0.00003
@@ -294,8 +296,6 @@ def model(env):
         nw.sw2_sw1_expected_time = env.now
         while env.now < start:
             yield env.timeout(0.1)
-            if  int(env.now)%2  == 2:
-                print(f"Time: {env.now} Switch1: {len(nw.sw1.items)} Switch2: {len(nw.sw2.items)}")
             if rng.random() < epsilon and is_training:
                 action = random.randint(0, len(list(nw.actions_step.keys())) - 1)
             else:
@@ -369,6 +369,6 @@ plt.title("Rewards Collected per Episode")
 plt.legend()
 
 if is_training:
-    plt.savefig('model5005.png')
+    plt.savefig('model50012.png')
     with open("nw.pkl", "wb") as f:
         pickle.dump(q, f)
