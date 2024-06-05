@@ -63,7 +63,7 @@ class NetworkEnvironment:
             packet = Packet(uuid.uuid4(),src, dst,timestamp= self.env.now,packet_size=packet_size)
             yield host.put(packet)
             packet_number -= 1
-            yield self.env.timeout(1)
+            yield self.env.timeout(5)
 
             
     def display(self):

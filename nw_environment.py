@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import pickle
 
 logs_list = []
-episodes = 35000
+episodes = 100000
 rewards_per_episode = np.zeros(episodes)
-overtime_threshold = 92
+overtime_threshold = 81
 is_training = False
 Total_packets =  20
 Total_packets_reached = 0
@@ -82,12 +82,12 @@ class NetworkEnvironment:
     def packet_generator(self, src, dst, host,packet_size,priority,packet_number):
         while packet_number > 0:
             delay = random.randint(1, 5)
-            packet = Packet(uuid.uuid4(),src= src,dst=dst, packet_size= packet_size,priority=priority,timestamp=self.env.now+delay)
+            packet = Packet(uuid.uuid4(),src= src,dst=dst, packet_size= packet_size,priority=priority,timestamp=self.env.now)
             yield host.put(packet)
             
             packet_number -= 1
             
-            yield self.env.timeout(delay)
+            yield self.env.timeout(1)
        
 
 
@@ -145,7 +145,6 @@ def rewardCal(now, packet, action, nw, env,priority,overtime):
             reward += 1
         else:
             reward -= 1
-            print("late packet")
         
         if Total_packets_reached == 19  and overtime_threshold > expected_time:
             # print(f"packet_number:{Total_packets_reached}")
@@ -268,10 +267,10 @@ def resource_handler(nw, action, packet, env, TransmissionDelay, state):
     
 def model(env):
     global Total_packets_reached,overtime_threshold
-    learning_rate_a = 0.3
+    learning_rate_a = 0.1
     discount_factor_g = 0.99
     epsilon = 1
-    epsilon_decay_rate = 0.00003
+    epsilon_decay_rate = 0.0000105
     rng = np.random.default_rng()
     start = 0
 
@@ -344,19 +343,20 @@ def model(env):
                         reward + discount_factor_g * np.max(q[new_state[0], new_state[1], :]) - q[state[0], state[1], action])
             state = new_state
             
-        # nw.reset_resource()
-        # print(f"total reward = {episode_reward}  env:{env.now} epsoides = {i} overtime:{overtime_threshold}  {max(nw.sw1_sw2_expected_time, nw.sw1_es3_expected_time, nw.sw2_es3_expected_time,nw.sw2_sw1_expected_time)}")
+        
         epsilon = max(epsilon - epsilon_decay_rate, 0)
         rewards_per_episode[i] = episode_reward
         if epsilon == 0:
-            learning_rate_a = 0.0001
+            learning_rate_a = 0.01
+        if i % 100 == 0:
+            print(f"Episode {i} Reward {episode_reward} Epsilon {epsilon}")
 
 
 env = simpy.Environment()
 
 model_process = env.process(model(env))
 env.run(until=20010000)
-display()
+
 
 sum_rewards = np.zeros(episodes)
 for t in range(episodes):
@@ -369,6 +369,8 @@ plt.title("Rewards Collected per Episode")
 plt.legend()
 
 if is_training:
-    plt.savefig('model50012.png')
+    plt.savefig('nw_environment.png')
     with open("nw.pkl", "wb") as f:
         pickle.dump(q, f)
+else:
+    display()
