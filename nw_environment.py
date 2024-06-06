@@ -131,8 +131,6 @@ def rewardCal(now, packet, action, nw, env,priority,overtime):
             reward -= 1
         
         if Total_packets_reached == 19  and overtime_threshold > expected_time:
-            # print(f"packet_number:{Total_packets_reached}")
-            # print(f"packet_id:{timestamp} priority:{priority}  action:{action} now:{env.now} expected_time:{expected_time} overtime:{overtime_threshold} timestamp:{timestamp} {[len(nw.es1.items) , len(nw.es2.items) , len(nw.sw1.items) , len(nw.sw2.items)]}  reward:{reward}")
             reward += 25
         else:
             if overtime_threshold < expected_time:
@@ -146,11 +144,6 @@ def rewardCal(now, packet, action, nw, env,priority,overtime):
 
 def resource_handler(nw, action, packet, env, TransmissionDelay, state):
     global Total_packets_reached 
-    sw1_sw2 = len(nw.sw1_sw2_resource.queue)
-    sw1_es3 = len(nw.sw1_es3_resource.queue)
-    sw2_es3 = len(nw.sw2_es3_resource.queue)
-    # logs_list.append([f"{packet.id} priority:{packet.priority}", nw.actions_step[action], f"{TransmissionDelay} (Agent)", env.now - packet.timestamp, env.now, state[0] + sw1_es3, state[1] + sw2_es3])
-
     if action == 0:
         transfer = "sw1 to sw2"
         with nw.sw1_sw2_resource.request() as request:
