@@ -1,3 +1,4 @@
+import random
 import simpy
 import uuid
 import tabulate
@@ -14,12 +15,12 @@ class Packet:
        
 
 class NetworkEnvironment:
-    def __init__(self, env, link_speeds={"sw1":{"es1":900,"dest":100,"sw2":900}, "sw2":{"es2":600,"dest":500,"sw1":900}}):
+    def __init__(self, env, link_speeds={"sw1":{"es1":600,"dest":100,"sw2":800}, "sw2":{"es2":800,"dest":800,"sw1":900}}):
         self.env = env
-        self.max_capacity = 30
+        self.max_capacity = 150
         self.es1 = simpy.Store(self.env, capacity=self.max_capacity)
         self.es2 = simpy.Store(self.env, capacity=self.max_capacity )
-        self.es3 = simpy.Store(self.env, capacity=self.max_capacity )
+        self.es3 = simpy.Store(self.env, capacity=20000 )
         self.sw1 = simpy.Store(self.env, capacity=self.max_capacity )
         self.sw2 = simpy.Store(self.env, capacity=self.max_capacity )
         self.actions_step ={0:"sw1_to_sw2",1:"sw2_to_sw1",2:"sw1_to_dest",3:"sw2_to_dest"}
@@ -59,11 +60,14 @@ class NetworkEnvironment:
             yield es.put(packet)
 
     def packet_generator(self, src, dst, host,packet_size,packet_number=10):
-        while packet_number >0:
-            packet = Packet(uuid.uuid4(),src, dst,timestamp= self.env.now,packet_size=packet_size)
-            yield host.put(packet)
-            packet_number -= 1
-            yield self.env.timeout(1)
+            delay = 2
+            batch_size = 6
+            for i in range(batch_size):
+                packet_number = 200
+                # for i in range(packet_number):   
+                #     packet = Packet(uuid.uuid4(),src= src,dst=dst, packet_size= 0.064,timestamp=self.env.now)
+                #     yield host.put(packet)
+                yield self.env.timeout(delay)
 
             
     def display(self):
