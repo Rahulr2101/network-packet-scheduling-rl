@@ -42,7 +42,7 @@ def run(episode,is_training=True):
             state = next_state
         epsilon = max(epsilon - epsilon_decay, 0)
         if(epsilon==0):
-            learning_rate = 0.04
+            learning_rate = 0.001
         if i % 100 == 0:
                 print(f"Episode {i} Reward {episode_reward} Epsilon {epsilon}")
 

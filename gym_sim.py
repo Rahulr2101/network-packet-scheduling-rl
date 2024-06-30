@@ -9,7 +9,7 @@ def run():
         if state[0] != 0:
             action = 2  # Move packets from sw1 to destination
             state, reward, done, info = env.step(action)
-        elif state[1] != 0:
+        if state[1] != 0:
             action = 3  # Move packets from sw2 to destination
             state, reward, done, info = env.step(action)
         else:
