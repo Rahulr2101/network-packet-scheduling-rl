@@ -105,20 +105,21 @@ class SimPyEnv(gym.Env):
                 reward -= 20
             pass
         # Run the SimPy environment for a larger time step to balance performance and accuracy
-        self.env.run(until=self.env.now + 3)
+        self.env.run(until=self.env.now + 2)
         self.state = [len(self.sw1.items), len(self.sw2.items)]
         if action != 4:
             for packet in list(self.es3.items):
                 if not packet.processed:
                     packet.processed = True
-                    self.timestamps.append(self.env.now - packet.timestamp)
-                    if self.env.now - packet.timestamp <= 45:
+                    if self.testing:
+                        self.timestamps.append(self.env.now - packet.timestamp)
+                    if self.env.now - packet.timestamp <= 480:
                         reward += 1
                         continue
                     else:
                         if self.testing:
                             self.count += 1
-        self.done = len(self.es3.items) == self.total_packets or self.env.now > 1400
+        self.done = len(self.es3.items) == self.total_packets
 
         if self.done:
             if len(self.es3.items) != self.total_packets:
@@ -129,8 +130,9 @@ class SimPyEnv(gym.Env):
             if self.testing:
                 self.display()
                 remaining = self.total_packets - len(self.es3.items)
+                average_arrival_time = np.mean(self.timestamps)
                 loss = int(((self.count + remaining) / self.total_packets) * 100)
-                print(f"Completed in {self.env.now} ms Total Packet = {self.total_packets}  Packets drop = {loss}%")
+                print(f"Completed in {self.env.now} ms Average Time = {average_arrival_time} Total Packet = {self.total_packets}  Packets drop = {loss}%")
 
         return np.array(self.state, dtype=np.int64), reward, self.done, {}
 
