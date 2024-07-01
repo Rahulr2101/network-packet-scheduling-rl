@@ -60,8 +60,8 @@ class SimPyEnv(gym.Env):
             self.rand1 = np.random.randint(70, 100)
             self.rand2 = np.random.randint(30, 60)
         else:
-            self.rand1 = 100
-            self.rand2 = 60
+            self.rand1 = 640
+            self.rand2 = 320
         self.total_packets = (self.rand1 + self.rand2) * 3
         self.env.process(self.packet_generator("es1", "sw1", self.es1, 0.064, delay=30, packet_number=self.rand1))
         self.env.process(self.packet_generator("es2", "sw2", self.es2, 0.064, delay=30, packet_number=self.rand2))
