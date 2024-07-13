@@ -2,7 +2,7 @@ import gym
 import simpy_env
 
 def run():
-    env = gym.make('SimPyEnv-v0')
+    env = gym.make('SimPyEnv-v0',testing=True)
     state, reward, done, info = env.reset()  # Properly reset and get initial state
     while not done:
 

@@ -6,22 +6,28 @@ import matplotlib.pyplot as plt
 import tabulate
 
 def run(episode,is_training=True):
-    env = gym.make('SimPyEnv-v0')
+    if is_training:
+        env = gym.make('SimPyEnv-v0')
+    else:
+        env = gym.make('SimPyEnv-v0', testing=True) 
 
     if(is_training):
-        q = np.zeros((400,400,5))
+        q1 = np.zeros((151,151,5))
+        q2 = np.zeros((151,151,5))
     else:
         f=open("nw.pkl","r")
         episode =1
-        with open('nw.pkl', 'rb') as f:
-            q = pickle.load(f)
-    learning_rate = 0.1
-    discount_factor = 0.99
+        with open('nw_q1.pkl', 'rb') as f1,open('nw_q2.pkl','rb') as f2:
+            q1 = pickle.load(f1)
+            q2 = pickle.load(f2)
+    learning_rate = 0.05
+    discount_factor = 0.95
     epsilon = 1
-    epsilon_decay = 0.00005
+    epsilon_decay = 0.0001
     rng = np.random.default_rng()
     rewards_per_episode = np.zeros(episode)
   
+
 
     for i in range(episode):
         state,reward,done,info = env.reset()
@@ -30,15 +36,21 @@ def run(episode,is_training=True):
             if is_training and rng.random() <epsilon:
                 action = env.action_space.sample()
             else:
-                action = np.argmax(q[state[0],state[1],:])
+                 action = np.argmax(q1[state[0], state[1], :] + q2[state[0], state[1], :])
             next_state, reward, done, info = env.step(action)
             episode_reward += reward
 
             if is_training:
-                 
-                 q[state[0],state[1],action] = q[state[0],state[1],action] + learning_rate * (
-                    reward + discount_factor * np.max(q[next_state[0],next_state[1],:]) - q[state[0],state[1],action]
-                )
+                if rng.random() < 0.5:
+                    best_action = np.argmax(q1[next_state[0],next_state[1],:])
+                    q1[state[0], state[1], action] = q1[state[0], state[1], action] + learning_rate * (
+                        reward + discount_factor * q2[next_state[0], next_state[1], best_action] - q1[state[0], state[1], action]
+                    )
+                else:
+                    best_action = np.argmax(q2[next_state[0], next_state[1], :])
+                    q2[state[0], state[1], action] = q2[state[0], state[1], action] + learning_rate * (
+                        reward + discount_factor * q1[next_state[0], next_state[1], best_action] - q2[state[0], state[1], action]
+                    )
             state = next_state
         epsilon = max(epsilon - epsilon_decay, 0)
         if(epsilon==0):
@@ -61,9 +73,10 @@ def run(episode,is_training=True):
 
     if is_training:
         plt.savefig('nw_environment.png')
-        with open("nw.pkl", "wb") as f:
-            pickle.dump(q, f)
+        with open("nw_q1.pkl", "wb") as f1, open("nw_q2.pkl", "wb") as f2:
+            pickle.dump(q1, f1)
+            pickle.dump(q2, f2)
 
 
 if __name__ == "__main__":
-    run(episode=20000, is_training=False)
+    run(episode=10000, is_training=True)
