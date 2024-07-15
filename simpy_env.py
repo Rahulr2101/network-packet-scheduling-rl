@@ -58,6 +58,7 @@ class SimPyEnv(gym.Env):
         self.reward = 0
         self.previous_delivered_packets = 0
         self.previous_dropped_packets = 0
+        self.previous_time = 0
 
         # Generate packets
         if not self.testing:
@@ -95,7 +96,6 @@ class SimPyEnv(gym.Env):
         
     
     def step(self, action):
-        reward = 0
         # Define a SimPy process for the selected action
         if action == 0:
             self.env.process(self.sender(self.sw1, self.sw2, "sw1", "sw2", self.link_speeds["sw1"]["sw2"]))
@@ -108,37 +108,41 @@ class SimPyEnv(gym.Env):
         elif action == 4:
             pass
         # Run the SimPy environment for a larger time step to balance performance and accuracy
-        self.env.run(until=self.env.now + 0.01)
+        self.env.run(until=self.env.now + 0.05)
         self.state = [len(self.sw1.items), len(self.sw2.items)]
-        if action == 2 or action == 3:
-            reward = len(self.es3.items) * 10 - len(self.sw1.items) - len(self.sw2.items)
-        else:
-            reward = -10 if len(self.sw1.items) + len(self.sw2.items) == 0 else 1
+        
+        reward = 0
+        sw_queue_length = len(self.sw1.items) + len(self.sw2.items)
 
-        packet_dropped = self.count - self.previous_dropped_packets
-        reward -= packet_dropped * 5
-
+        reward += (len(self.es3.items) - self.previous_delivered_packets) * 1
+        if action == 4 and sw_queue_length>0:
+            reward -=  10
+            
+        
     
-        self.previous_dropped_packets = self.count
-
 
         self.done = len(self.es3.items) == self.total_packets
 
-        if self.env.now > 1000 or self.count + len(self.es3.items) == self.total_packets:
+        if self.env.now >1000  or self.count + len(self.es3.items) == self.total_packets:
             self.done = True
-
-        
 
         if self.done:
             remaining = self.total_packets - len(self.es3.items)
             loss = int(((remaining) / self.total_packets) * 100)
-            if len(self.es3.items) != self.total_packets or loss > 15 :
+            if len(self.es3.items) != self.total_packets :
                 reward -= remaining * 1
-            else:
-                reward += 100
+            # else:
+            #     reward += 100
             if self.testing:
                 self.display()
                 print(f"Completed in {self.env.now} ms Average Time = {0} Total Packet = {self.total_packets} Packets_Received = {len(self.es3.items)}  Packets drop = {loss}%")
+        
+
+        # Update previous states
+        self.previous_delivered_packets = len(self.es3.items)
+        self.previous_dropped_packets = self.count
+        self.previous_time = self.env.now
+            
 
         return np.array(self.state, dtype=np.int64), reward, self.done, {}
 

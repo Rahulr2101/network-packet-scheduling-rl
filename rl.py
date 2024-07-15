@@ -20,10 +20,9 @@ def run(episode,is_training=True):
         with open('nw_q1.pkl', 'rb') as f1,open('nw_q2.pkl','rb') as f2:
             q1 = pickle.load(f1)
             q2 = pickle.load(f2)
-    learning_rate = 0.05
-    discount_factor = 0.95
-    epsilon = 1
-    epsilon_decay = 0.0001
+    learning_rate = 0.0001
+    discount_factor = 0.99
+    epsilon = 0.05
     rng = np.random.default_rng()
     rewards_per_episode = np.zeros(episode)
   
@@ -52,9 +51,10 @@ def run(episode,is_training=True):
                         reward + discount_factor * q1[next_state[0], next_state[1], best_action] - q2[state[0], state[1], action]
                     )
             state = next_state
-        epsilon = max(epsilon - epsilon_decay, 0)
-        if(epsilon==0):
-            learning_rate = 0.001
+     
+        # if(epsilon==0):
+        #     learning_rate = 0.001
+        
         if i % 100 == 0:
                 print(f"Episode {i} Reward {episode_reward} Epsilon {epsilon}")
 
@@ -79,4 +79,4 @@ def run(episode,is_training=True):
 
 
 if __name__ == "__main__":
-    run(episode=10000, is_training=True)
+    run(episode=20000, is_training=False)
