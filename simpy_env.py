@@ -62,11 +62,11 @@ class SimPyEnv(gym.Env):
 
         # Generate packets
         if not self.testing:
-            self.rand1 = np.random.randint(100, 150)
-            self.rand2 = np.random.randint(100, 150)
+            self.rand1 = np.random.randint(10, 150)
+            self.rand2 = np.random.randint(10, 150)
         else:
-            self.rand1 = 150
-            self.rand2 = 150
+            self.rand1 = 200
+            self.rand2 = 70
         self.total_packets = (self.rand1 + self.rand2) * 3
         self.env.process(self.packet_generator("es1", "sw1", self.es1, self.mtu, delay=30, packet_number=self.rand1))
         self.env.process(self.packet_generator("es2", "sw2", self.es2, self.mtu, delay=30, packet_number=self.rand2))
@@ -117,9 +117,6 @@ class SimPyEnv(gym.Env):
         reward += (len(self.es3.items) - self.previous_delivered_packets) * 1
         if action == 4 and sw_queue_length>0:
             reward -=  10
-            
-        
-    
 
         self.done = len(self.es3.items) == self.total_packets
 

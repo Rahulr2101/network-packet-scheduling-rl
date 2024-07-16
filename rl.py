@@ -22,7 +22,8 @@ def run(episode,is_training=True):
             q2 = pickle.load(f2)
     learning_rate = 0.0001
     discount_factor = 0.99
-    epsilon = 0.05
+    epsilon = 1
+    epsilon_decay = 0.0001
     rng = np.random.default_rng()
     rewards_per_episode = np.zeros(episode)
   
@@ -51,7 +52,10 @@ def run(episode,is_training=True):
                         reward + discount_factor * q1[next_state[0], next_state[1], best_action] - q2[state[0], state[1], action]
                     )
             state = next_state
-     
+        if epsilon > 0.05:
+            epsilon -= epsilon_decay
+        else:
+            epsilon = 0.05
         # if(epsilon==0):
         #     learning_rate = 0.001
         
