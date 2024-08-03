@@ -12,8 +12,8 @@ def run(episode,is_training=True):
         env = gym.make('SimPyEnv-v0', testing=True) 
 
     if(is_training):
-        q1 = np.zeros((151,151,5))
-        q2 = np.zeros((151,151,5))
+        q1 = np.zeros((151,151,4))
+        q2 = np.zeros((151,151,4))
     else:
         f=open("nw.pkl","r")
         episode =1
@@ -83,4 +83,4 @@ def run(episode,is_training=True):
 
 
 if __name__ == "__main__":
-    run(episode=20000, is_training=False)
+    run(episode=20000, is_training=True)

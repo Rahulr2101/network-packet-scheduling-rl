@@ -31,12 +31,13 @@ class SimPyEnv(gym.Env):
         self.actions_step = {0: "sw1_to_sw2", 1: "sw2_to_sw1", 2: "sw1_to_dest", 3: "sw2_to_dest"}
         self.link_speeds = {"sw1": {"es1": 1000, "dest": 900, "sw2": 900}, "sw2": {"es2": 800, "dest": 1000, "sw1": 900}}
         self.logs_list = []
-        self.action_space = spaces.Discrete(5)
+        self.action_space = spaces.Discrete(4)
         self.observation_space = spaces.Box(low=0, high=self.max_capacity, shape=(2,), dtype=np.float32)
         self.reward_range = (-1, 1)
         self.current_time = 0
         self.count = 0
         self.done = False
+        self.truncated = False
         self.info = []
         self.state = [0, 0]
         self.old_state = self.state
@@ -54,6 +55,7 @@ class SimPyEnv(gym.Env):
         self.timestamps = []
         self.old_state = self.state
         self.done = False
+        self.truncated = False
         self.current_time = 0
         self.reward = 0
         self.previous_delivered_packets = 0
@@ -78,7 +80,7 @@ class SimPyEnv(gym.Env):
         self.env.process(self.remove_delayed_packets(self.sw1))
         self.env.process(self.remove_delayed_packets(self.sw2))
 
-        return np.array(self.state, dtype=np.int64), self.reward, self.done, self.info
+        return np.array(self.state, dtype=np.int64), self.reward, self.done, self.truncated,self.info
 
     def packet_generator(self, src, dst, host, packet_size, delay=60, packet_number=50):
         batch = 3
@@ -108,7 +110,7 @@ class SimPyEnv(gym.Env):
         elif action == 4:
             pass
         # Run the SimPy environment for a larger time step to balance performance and accuracy
-        self.env.run(until=self.env.now + 0.05)
+        self.env.run(until=self.env.now + 0.1)
         self.state = [len(self.sw1.items), len(self.sw2.items)]
         
         reward = 0
@@ -120,10 +122,10 @@ class SimPyEnv(gym.Env):
 
         self.done = len(self.es3.items) == self.total_packets
 
-        if self.env.now >1000  or self.count + len(self.es3.items) == self.total_packets:
-            self.done = True
+        if self.env.now >100:
+            self.truncated = True
 
-        if self.done:
+        if self.done or self.truncated:
             remaining = self.total_packets - len(self.es3.items)
             loss = int(((remaining) / self.total_packets) * 100)
             if len(self.es3.items) != self.total_packets :
@@ -141,7 +143,7 @@ class SimPyEnv(gym.Env):
         self.previous_time = self.env.now
             
 
-        return np.array(self.state, dtype=np.int64), reward, self.done, {}
+        return np.array(self.state, dtype=np.int64), reward, self.done,self.truncated, {}
 
     def display(self):
         print(tabulate.tabulate(self.info, headers=["Packet ID", "Action", "Delay(in Sec)", "Packet Time", "Current_time(in Sec)", "Switch 1 Queue Length", "Switch 2 Queue Length"]))
